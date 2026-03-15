@@ -124,6 +124,7 @@
             background: #eee; padding: 15px; border-radius: 8px;
             text-align: center; border-left: 4px solid #000;
         }
+        .music-icon { font-size: 1.5rem; margin-bottom: 5px; }
         .music-label { font-size: 0.55rem; color: #000; text-transform: uppercase; letter-spacing: 2px; }
         .music-artist { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #000; font-weight: 600; margin-top: 5px; }
         .music-song { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #000; font-style: italic; }
@@ -239,7 +240,8 @@
                         <!-- Right Column -->
                         <div class="column">
                             <div class="music-box" id="factSong">
-                                <div class="music-label" id="songLabel">Nº1 en España</div>
+                                <div class="music-icon">🎵</div>
+                                <div class="music-label" id="songLabel">Sonaba en todas partes</div>
                                 <div class="music-artist" id="songArtist">Mecano</div>
                                 <div class="music-song" id="song">"Ay Qué Pesado"</div>
                             </div>
@@ -540,11 +542,11 @@
             const los40 = DATA.los40 || [];
             let found = los40.find(s => s.year === year && s.month === month);
             if (!found) found = los40.filter(s => s.year === year)[0];
-            if (found) return { artist: found.artist, song: `"${found.song}"`, label: 'Nº1 en España' };
+            if (found) return { artist: found.artist, song: `"${found.song}"`, label: 'Sonaba en todas partes' };
             
             const historic = DATA.music_historic || [];
             const histFound = historic.find(s => year >= s.start && year <= s.end);
-            if (histFound) return { artist: histFound.artist, song: `"${histFound.song}"`, label: histFound.label || 'Sonaba en la radio' };
+            if (histFound) return { artist: histFound.artist, song: `"${histFound.song}"`, label: 'Sonaba en todas partes' };
             return null;
         }
 
