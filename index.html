@@ -426,7 +426,7 @@
         function getEntertainment(year) {
             const eras = DATA.entertainment || [];
             const found = eras.find(e => year >= e.start && year <= e.end);
-            if (!found) return null;
+            if (!found || !found.shows || found.shows.length === 0) return null;
             const show = found.shows[Math.floor(Math.random() * found.shows.length)];
             return { value: show, label: found.label || 'En la tele' };
         }
