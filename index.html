@@ -458,6 +458,13 @@
                     else if (json.songs) DATA.music_historic = json.songs;
                     else if (json.population) DATA.population = json.population;
                     else if (json.eras) DATA.entertainment = json.eras;
+                    else if (json.yearly_inflation) { 
+                        // Convert yearly_inflation object to array format
+                        DATA.ipc = Object.entries(json.yearly_inflation).map(([year, rate]) => ({
+                            year: parseInt(year),
+                            rate: rate
+                        }));
+                    }
                     else if (json.ipc) { DATA.ipc = json.ipc; DATA.ipc_ref = json.reference_prices_2024; }
                     else if (json.comparisons) DATA.buying_power = json.comparisons;
                     else DATA[file] = json;
@@ -605,20 +612,34 @@
 
         function getCoffeePrice(year) {
             const ipcData = DATA.ipc || [];
-            const refPrices = DATA.ipc_ref || { coffee_eur: 1.50 };
-            const currentIPC = (ipcData.find(i => i.year === 2024) || {}).index || 41.30;
-            const yearData = findByYear(ipcData, year);
-            if (!yearData) return null;
+            // Coffee costs ~1.50€ in 2024. Calculate historical price using cumulative inflation.
+            const coffeeNow = 1.50;
             
-            const coffeeEur = refPrices.coffee_eur * (yearData.index / currentIPC);
+            // Build cumulative index: 2024 = 100, work backwards using yearly rates
+            const sortedYears = ipcData.map(d => d.year).sort((a, b) => b - a);
+            const indices = { 2024: 100 };
+            
+            for (let i = 0; i < sortedYears.length; i++) {
+                const y = sortedYears[i];
+                if (y >= 2024) continue;
+                const nextYear = sortedYears[i - 1] || 2024;
+                const rateData = ipcData.find(d => d.year === nextYear);
+                const rate = rateData ? rateData.rate / 100 : 0;
+                indices[y] = indices[nextYear] / (1 + rate);
+            }
+            
+            const yearIndex = indices[year];
+            if (!yearIndex) return null;
+            
+            const coffeeEur = coffeeNow * (yearIndex / 100);
             const coffeePts = Math.round(coffeeEur * PESETAS_TO_EUR);
             
             if (year < 2002) {
                 // Pre-euro: pesetas first
-                return `${coffeePts} pesetas<br><small>(${coffeeEur.toFixed(2)} €)</small>`;
+                return `${coffeePts} pesetas (${coffeeEur.toFixed(2)} €)`;
             }
             // Post-euro: euros first
-            return `${coffeeEur.toFixed(2)} €<br><small>(${coffeePts} pts)</small>`;
+            return `${coffeeEur.toFixed(2)} € (${coffeePts} pts)`;
         }
 
         function getMoonPhase(date) {
