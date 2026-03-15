@@ -137,7 +137,7 @@
         }
         .buying-item { text-align: center; }
         .buying-amount { font-size: 0.6rem; color: #c9a227; font-weight: 500; }
-        .buying-value { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; color: #aaa; margin-top: 2px; }
+        .buying-value { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: #fff; margin-top: 3px; }
 
         /* Footer */
         .poster-footer { text-align: center; margin-top: 15px; padding-top: 12px; }
@@ -546,9 +546,14 @@
             }
 
             const bp = getBuyingPower(year);
-            document.getElementById('buying1').textContent = bp.with_1_eur || '—';
-            document.getElementById('buying100').textContent = bp.with_100_eur || '—';
-            document.getElementById('buying1000').textContent = bp.with_1000_eur || '—';
+            console.log('Buying power for year', year, ':', bp);
+            const b1 = bp.with_1_eur || '—';
+            const b100 = bp.with_100_eur || '—';
+            const b1000 = bp.with_1000_eur || '—';
+            document.getElementById('buying1').textContent = b1;
+            document.getElementById('buying100').textContent = b100;
+            document.getElementById('buying1000').textContent = b1000;
+            console.log('Set buying values:', b1, b100, b1000);
 
             document.getElementById('olderThan').textContent = getOlderThan(dateInput);
         }
