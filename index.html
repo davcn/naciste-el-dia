@@ -525,12 +525,16 @@
 
         function getKing(dateStr) {
             const found = findByDate(DATA.kings || [], dateStr);
-            if (!found) return { name: null, label: 'Jefe del Estado' };
+            if (!found) return { name: null, label: 'Jefe del Estado', hidePresident: false };
             let label = 'Rey de España';
-            if (found.type === 'dictador') label = 'Jefe del Estado';
-            else if (found.type === 'republica') label = 'Régimen';
-            else if (found.type === 'guerra') return { name: null, label: null };
-            return { name: found.title || found.name, label };
+            let hidePresident = false;
+            if (found.type === 'dictador') {
+                label = 'Jefe del Estado';
+                hidePresident = true; // Hide president during dictatorship
+            }
+            else if (found.type === 'republica') label = 'Presidente de la República';
+            else if (found.type === 'guerra') return { name: null, label: null, hidePresident: true };
+            return { name: found.name, label, hidePresident };
         }
 
         function getSalary(year) {
@@ -747,9 +751,15 @@
             if (isWar) return;
 
             // Update facts with real data
-            setFact('president', getPresident(dateInput));
-            
             const kingData = getKing(dateInput);
+            
+            // Hide president during Franco era (dictator was both)
+            if (kingData.hidePresident) {
+                setFact('president', null);
+            } else {
+                setFact('president', getPresident(dateInput));
+            }
+            
             setFact('king', kingData.name, 'kingLabel', kingData.label);
 
             const musicData = getMusic(year, month + 1);
