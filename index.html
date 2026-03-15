@@ -468,14 +468,20 @@
             return { name: found.name, label, hidePresident };
         }
 
-        function formatMoney(euros, year) {
-            // Always show euros, with pesetas in parentheses for pre-2002
-            const eur = Math.round(euros);
+        function formatMoney(euros, year, decimals = false) {
+            // Always show euros first, with pesetas in parentheses for pre-2002
+            let eurStr;
+            if (decimals && euros < 10) {
+                eurStr = euros.toFixed(2).replace('.', ',');
+            } else {
+                eurStr = Math.round(euros).toLocaleString('es-ES');
+            }
+            
             if (year < 2002) {
                 const pts = Math.round(euros * PESETAS_TO_EUR);
-                return `${eur.toLocaleString('es-ES')} € (${pts.toLocaleString('es-ES')} pts)`;
+                return `${eurStr} € (${pts.toLocaleString('es-ES')} pts)`;
             }
-            return `${eur.toLocaleString('es-ES')} €`;
+            return `${eurStr} €`;
         }
 
         function getSalary(year) {
@@ -513,7 +519,6 @@
         function getCoffeePrice(year) {
             // Coffee ~1.50€ in 2024, estimate historical using rough inflation
             const basePrice = 1.50;
-            const baseYear = 2024;
             // Rough inflation multiplier per decade
             const inflationFactors = {
                 2020: 1.0, 2010: 0.85, 2000: 0.70, 1990: 0.50,
@@ -523,7 +528,7 @@
             const decade = Math.floor(year / 10) * 10;
             const factor = inflationFactors[decade] || 0.5;
             const price = basePrice * factor;
-            return formatMoney(price, year);
+            return formatMoney(price, year, true); // use decimals for coffee
         }
 
         function getMusic(year, month) {
