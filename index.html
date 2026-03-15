@@ -685,15 +685,26 @@
 
         function getOlderThan(birthDate) {
             const birth = new Date(birthDate);
-            // Get all milestones the person is older than
-            const olderThan = milestones
-                .filter(m => birth < new Date(m.date))
-                .slice(0, 4); // Show up to 4
+            const birthYear = birth.getFullYear();
             
-            if (olderThan.length === 0) return 'casi todo';
+            // Get milestones that came AFTER birth, within ~15 years
+            const relevant = milestones.filter(m => {
+                const mDate = new Date(m.date);
+                const mYear = mDate.getFullYear();
+                return mYear > birthYear && mYear <= birthYear + 15;
+            });
             
-            // Format as list
-            return olderThan.map(m => m.name).join(', ');
+            if (relevant.length === 0) {
+                // Fallback: get the closest milestone after birth
+                const after = milestones
+                    .filter(m => new Date(m.date) > birth)
+                    .sort((a, b) => new Date(a.date) - new Date(b.date));
+                return after.length > 0 ? after[0].name : 'casi todo';
+            }
+            
+            // Random selection
+            const randomIndex = Math.floor(Math.random() * relevant.length);
+            return relevant[randomIndex].name;
         }
 
         function setFact(id, value, labelId = null, labelText = null) {
