@@ -6,296 +6,165 @@
     <title>El Día Que Naciste — Canvas Personalizado</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #1a1a1a;
+            background: #111;
             min-height: 100vh;
             color: #fff;
-            padding: 40px 20px;
+            padding: 30px 20px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        .container { max-width: 800px; margin: 0 auto; }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 5px; }
+        header p { color: #666; font-size: 0.9rem; }
 
-        header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #888;
-            font-size: 1.1rem;
-        }
-
-        .controls-section {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
+        .controls-section { text-align: center; margin-bottom: 40px; }
         .date-input-wrapper {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            background: #2a2a2a;
-            padding: 15px 25px;
-            border-radius: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: inline-flex; align-items: center; gap: 12px;
+            background: #1a1a1a; padding: 12px 20px; border-radius: 10px;
+            flex-wrap: wrap; justify-content: center;
         }
-
-        .date-input-wrapper label {
-            font-weight: 500;
-            color: #ccc;
-        }
-
+        .date-input-wrapper label { font-weight: 400; color: #888; font-size: 0.9rem; }
         .date-input-wrapper input {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            padding: 10px 15px;
-            border: 2px solid #444;
-            border-radius: 8px;
-            background: #1a1a1a;
-            color: #fff;
+            font-family: 'Inter', sans-serif; font-size: 1rem; padding: 8px 12px;
+            border: 1px solid #333; border-radius: 6px; background: #0a0a0a; color: #fff;
         }
-
         .date-input-wrapper button {
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            background: #c9a227;
-            color: #1a1a1a;
-            cursor: pointer;
-            transition: background 0.2s;
+            font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500;
+            padding: 10px 20px; border: none; border-radius: 6px;
+            background: #c9a227; color: #000; cursor: pointer; transition: all 0.2s;
         }
+        .date-input-wrapper button:hover { background: #ddb832; }
+        .btn-download { background: #234 !important; color: #fff !important; }
+        .btn-download:hover { background: #345 !important; }
 
-        .date-input-wrapper button:hover {
-            background: #ddb832;
-        }
+        .poster-container { display: flex; justify-content: center; }
 
-        .btn-download {
-            background: #2d5a27 !important;
-            color: #fff !important;
-        }
-
-        .btn-download:hover {
-            background: #3d7a37 !important;
-        }
-
-        .loading {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .poster-container {
-            display: flex;
-            justify-content: center;
-            perspective: 1000px;
-        }
-
-        /* 50x70cm ratio = 5:7 = 0.714 */
         .poster {
-            width: 500px;
-            min-height: 700px;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            border: 3px solid #c9a227;
-            border-radius: 4px;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(201, 162, 39, 0.3);
+            width: 420px;
+            background: linear-gradient(180deg, #0d0d0d 0%, #141414 100%);
+            border: 2px solid #c9a227;
+            padding: 30px 28px;
             position: relative;
-            overflow: hidden;
         }
 
         .poster::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
-            border: 1px solid rgba(201, 162, 39, 0.2);
+            content: ''; position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 1px solid rgba(201, 162, 39, 0.15);
             pointer-events: none;
         }
 
-        .poster-header {
-            text-align: center;
-            margin-bottom: 20px;
+        /* Header */
+        .poster-header { text-align: center; margin-bottom: 20px; }
+        .date-display {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem; color: #888; letter-spacing: 2px;
+            text-transform: uppercase; margin-bottom: 6px;
         }
-
-        .poster-header .day-number {
+        .day-big {
             font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            font-weight: 700;
-            color: #c9a227;
-            line-height: 1;
+            font-size: 4.5rem; font-weight: 700; color: #c9a227;
+            line-height: 0.9; letter-spacing: -2px;
         }
-
-        .poster-header .month-year {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-top: 5px;
-        }
-
-        .poster-header .weekday {
-            font-size: 0.85rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 8px;
+        .month-year {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem; color: #fff; margin-top: 4px;
+            letter-spacing: 3px; text-transform: uppercase;
         }
 
         .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #c9a227, transparent);
-            margin: 15px 0;
+            height: 1px; margin: 18px 0;
+            background: linear-gradient(90deg, transparent, #c9a227 30%, #c9a227 70%, transparent);
+        }
+        .divider.subtle { background: linear-gradient(90deg, transparent, #333 30%, #333 70%, transparent); }
+
+        /* Facts Grid */
+        .facts-section { margin-bottom: 12px; }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.7rem; color: #555; text-transform: uppercase;
+            letter-spacing: 3px; text-align: center; margin-bottom: 10px;
         }
 
-        .poster-title {
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            color: #c9a227;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
+        .facts-row {
+            display: flex; justify-content: space-between; gap: 15px;
+            margin-bottom: 10px;
         }
-
-        .facts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px 15px;
-            flex: 1;
-        }
-
         .fact {
-            text-align: center;
-            padding: 8px 5px;
+            flex: 1; text-align: center; padding: 6px 0;
         }
-
-        .fact.hidden {
-            display: none !important;
-        }
-
+        .fact.hidden { display: none !important; }
         .fact-label {
-            font-size: 0.6rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 4px;
+            font-size: 0.55rem; color: #555; text-transform: uppercase;
+            letter-spacing: 1.5px; margin-bottom: 3px;
         }
-
         .fact-value {
-            font-size: 0.85rem;
-            color: #fff;
-            font-weight: 500;
-            line-height: 1.3;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem; color: #fff; line-height: 1.2;
+        }
+        .fact-value.gold { color: #c9a227; }
+        .fact-value.small { font-size: 0.8rem; }
+        .fact-sub { font-size: 0.65rem; color: #666; margin-top: 2px; font-family: 'Inter', sans-serif; }
+
+        /* Full width fact */
+        .fact-full {
+            text-align: center; padding: 8px 0; margin: 6px 0;
+            border-top: 1px solid rgba(201,162,39,0.1);
+            border-bottom: 1px solid rgba(201,162,39,0.1);
         }
 
-        .fact-value.highlight {
-            color: #c9a227;
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
+        /* Music section special styling */
+        .music-section { text-align: center; margin: 12px 0; }
+        .music-label { font-size: 0.55rem; color: #555; text-transform: uppercase; letter-spacing: 1.5px; }
+        .music-artist { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #c9a227; margin-top: 4px; }
+        .music-song { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: #fff; font-style: italic; }
+
+        /* Buying power compact */
+        .buying-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            margin: 10px 0; padding: 10px 0;
+            border-top: 1px solid rgba(201,162,39,0.1);
+            border-bottom: 1px solid rgba(201,162,39,0.1);
+        }
+        .buying-item { text-align: center; }
+        .buying-amount { font-size: 0.6rem; color: #c9a227; font-weight: 500; }
+        .buying-value { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; color: #aaa; margin-top: 2px; }
+
+        /* Footer */
+        .poster-footer { text-align: center; margin-top: 15px; padding-top: 12px; }
+        .older-than {
+            font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .older-than span { color: #888; font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; text-transform: none; }
+        .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic; color: #444; font-size: 0.9rem; margin-top: 12px;
         }
 
-        .fact.full-width {
-            grid-column: 1 / -1;
-            border-top: 1px solid rgba(201, 162, 39, 0.2);
-            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
-            padding: 12px 5px;
-            margin: 3px 0;
-        }
-
-        .poster-footer {
-            text-align: center;
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(201, 162, 39, 0.2);
-        }
-
-        .poster-footer .tagline {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: #888;
-            font-size: 0.85rem;
-        }
-
+        /* War notice */
         .war-notice {
-            text-align: center;
-            padding: 20px;
-            color: #888;
-            font-style: italic;
-            border: 1px solid rgba(201, 162, 39, 0.2);
-            margin: 10px 0;
-            display: none;
+            text-align: center; padding: 25px 15px; color: #666;
+            font-family: 'Cormorant Garamond', serif; font-style: italic;
+            border: 1px solid rgba(201,162,39,0.15); margin: 15px 0; display: none;
         }
+        .war-notice.visible { display: block; }
 
-        .war-notice.visible {
-            display: block;
-        }
+        .loading { opacity: 0.5; pointer-events: none; }
 
-        @media (max-width: 600px) {
-            .poster {
-                width: 100%;
-                max-width: 360px;
-                min-height: 500px;
-                padding: 25px;
-            }
-
-            .poster-header .day-number {
-                font-size: 3.5rem;
-            }
-
-            .facts-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .fact.full-width {
-                grid-column: 1;
-            }
-
-            .date-input-wrapper {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            .controls-section, header {
-                display: none;
-            }
-            .poster {
-                box-shadow: none;
-                margin: 0 auto;
-            }
+        @media (max-width: 500px) {
+            .poster { width: 100%; max-width: 360px; padding: 22px 20px; }
+            .day-big { font-size: 3.5rem; }
+            .facts-row { flex-direction: column; gap: 8px; }
+            .buying-grid { grid-template-columns: 1fr; gap: 6px; }
         }
     </style>
 </head>
@@ -308,89 +177,97 @@
 
         <div class="controls-section">
             <div class="date-input-wrapper">
-                <label for="birthdate">Fecha de nacimiento:</label>
+                <label>Fecha:</label>
                 <input type="date" id="birthdate" min="1920-01-01" max="2020-12-31" value="1985-03-15">
-                <button onclick="generatePoster()">Generar Canvas</button>
-                <button class="btn-download" onclick="downloadPDF()">📥 Descargar PDF</button>
+                <button onclick="generatePoster()">Generar</button>
+                <button class="btn-download" onclick="downloadPDF()">📥 PDF</button>
             </div>
         </div>
 
         <div class="poster-container">
             <div class="poster" id="poster">
                 <div class="poster-header">
-                    <div class="day-number" id="day">15</div>
+                    <div class="date-display" id="weekday">Viernes</div>
+                    <div class="day-big" id="day">15</div>
                     <div class="month-year" id="monthYear">Marzo 1985</div>
-                    <div class="weekday" id="weekday">Viernes</div>
                 </div>
 
                 <div class="divider"></div>
 
-                <div class="poster-title">España en este día</div>
-
                 <div class="war-notice" id="warNotice">
-                    España vivía tiempos de guerra civil.<br>
-                    <small>1936 – 1939</small>
+                    España vivía tiempos de guerra.<br>
+                    <small style="color:#555">1936 – 1939</small>
                 </div>
 
-                <div class="facts-grid" id="factsGrid">
-                    <div class="fact" id="factPresident">
-                        <div class="fact-label">Presidente del Gobierno</div>
-                        <div class="fact-value" id="president">Felipe González</div>
-                    </div>
-                    <div class="fact" id="factKing">
-                        <div class="fact-label" id="kingLabel">Jefe del Estado</div>
-                        <div class="fact-value" id="king">Juan Carlos I</div>
-                    </div>
-
-                    <div class="fact" id="factSong">
-                        <div class="fact-label" id="songLabel">Nº1 en Los 40</div>
-                        <div class="fact-value" id="song">—</div>
-                    </div>
-                    <div class="fact" id="factHouse">
-                        <div class="fact-label">Un piso costaba</div>
-                        <div class="fact-value" id="house">—</div>
+                <div id="factsContainer">
+                    <!-- Government -->
+                    <div class="facts-row">
+                        <div class="fact" id="factPresident">
+                            <div class="fact-label">Presidente</div>
+                            <div class="fact-value" id="president">Felipe González</div>
+                        </div>
+                        <div class="fact" id="factKing">
+                            <div class="fact-label" id="kingLabel">Jefe del Estado</div>
+                            <div class="fact-value" id="king">Juan Carlos I</div>
+                        </div>
                     </div>
 
-                    <div class="fact full-width" id="factCoffee">
-                        <div class="fact-label">Un café costaba</div>
-                        <div class="fact-value highlight" id="coffee">45 pesetas (0,27 €)</div>
+                    <div class="divider subtle"></div>
+
+                    <!-- Music -->
+                    <div class="music-section" id="factSong">
+                        <div class="music-label" id="songLabel">Nº1 en España</div>
+                        <div class="music-artist" id="songArtist">Mecano</div>
+                        <div class="music-song" id="song">"Ay Qué Pesado"</div>
                     </div>
 
-                    <div class="fact" id="factSalary">
-                        <div class="fact-label">Salario medio</div>
-                        <div class="fact-value" id="salary">—</div>
-                    </div>
-                    <div class="fact" id="factPopulation">
-                        <div class="fact-label">Población de España</div>
-                        <div class="fact-value" id="population">38,4 millones</div>
+                    <div class="divider subtle"></div>
+
+                    <!-- Economy row -->
+                    <div class="facts-row">
+                        <div class="fact" id="factHouse">
+                            <div class="fact-label">Un piso</div>
+                            <div class="fact-value gold" id="house">—</div>
+                        </div>
+                        <div class="fact" id="factSalary">
+                            <div class="fact-label">Salario medio</div>
+                            <div class="fact-value" id="salary">—</div>
+                        </div>
                     </div>
 
-                    <div class="fact full-width" id="factBuying1">
-                        <div class="fact-label" id="buying1Label">Con 1€ (166 pts) comprabas</div>
-                        <div class="fact-value highlight" id="buying1">—</div>
+                    <!-- Population & Entertainment -->
+                    <div class="facts-row">
+                        <div class="fact" id="factPopulation">
+                            <div class="fact-label">Población</div>
+                            <div class="fact-value" id="population">38,4 M</div>
+                        </div>
+                        <div class="fact" id="factTV">
+                            <div class="fact-label" id="tvLabel">En la tele</div>
+                            <div class="fact-value small" id="tv">Un, Dos, Tres</div>
+                        </div>
                     </div>
 
-                    <div class="fact" id="factBuying100">
-                        <div class="fact-label" id="buying100Label">Con 100€ (16.639 pts)</div>
-                        <div class="fact-value" id="buying100">—</div>
-                    </div>
-                    <div class="fact" id="factBuying1000">
-                        <div class="fact-label" id="buying1000Label">Con 1.000€ (166.386 pts)</div>
-                        <div class="fact-value" id="buying1000">—</div>
-                    </div>
-
-                    <div class="fact full-width" id="factTV">
-                        <div class="fact-label" id="tvLabel">En la tele</div>
-                        <div class="fact-value" id="tv">Un, Dos, Tres</div>
-                    </div>
-
-                    <div class="fact" id="factOlderThan">
-                        <div class="fact-label">Eres más viejo que</div>
-                        <div class="fact-value" id="olderThan">Internet</div>
+                    <!-- Buying power compact -->
+                    <div class="buying-grid" id="buyingSection">
+                        <div class="buying-item" id="factBuying1">
+                            <div class="buying-amount">CON 1€</div>
+                            <div class="buying-value" id="buying1">—</div>
+                        </div>
+                        <div class="buying-item" id="factBuying100">
+                            <div class="buying-amount">CON 100€</div>
+                            <div class="buying-value" id="buying100">—</div>
+                        </div>
+                        <div class="buying-item" id="factBuying1000">
+                            <div class="buying-amount">CON 1.000€</div>
+                            <div class="buying-value" id="buying1000">—</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="poster-footer">
+                    <div class="older-than" id="factOlderThan">
+                        Eres más viejo que <span id="olderThan">Internet</span>
+                    </div>
                     <div class="tagline">El día que todo empezó</div>
                 </div>
             </div>
@@ -398,11 +275,11 @@
     </div>
 
     <script>
-        // Data stores
-        let DATA = {
+        const DATA = {
             presidents: [],
             kings: [],
             salaries: [],
+            smi: [],
             housing: [],
             los40: [],
             music_historic: [],
@@ -417,44 +294,33 @@
         const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         const weekdays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-        const moonPhases = ['🌑 Luna nueva', '🌒 Creciente', '🌓 Cuarto creciente', '🌔 Gibosa creciente', 
-                          '🌕 Luna llena', '🌖 Gibosa menguante', '🌗 Cuarto menguante', '🌘 Menguante'];
 
         const milestones = [
-            // 2020s
             { name: 'ChatGPT', date: '2022-11-30' },
-            // 2010s
             { name: 'TikTok', date: '2016-09-01' },
-            { name: 'Spotify España', date: '2013-09-15' },
+            { name: 'Spotify', date: '2013-09-15' },
             { name: 'Instagram', date: '2010-10-06' },
-            // 2000s
             { name: 'WhatsApp', date: '2009-01-01' },
             { name: 'el iPhone', date: '2007-06-29' },
             { name: 'Twitter', date: '2006-07-15' },
             { name: 'YouTube', date: '2005-02-14' },
             { name: 'Facebook', date: '2004-02-04' },
             { name: 'Wikipedia', date: '2001-01-15' },
-            // 1990s
             { name: 'Google', date: '1998-09-04' },
             { name: 'el DVD', date: '1996-11-01' },
             { name: 'la PlayStation', date: '1995-09-29' },
             { name: 'Amazon', date: '1994-07-05' },
-            { name: 'Internet público', date: '1991-08-06' },
-            // 1980s
+            { name: 'Internet', date: '1991-08-06' },
             { name: 'el CD', date: '1982-08-17' },
-            { name: 'el PC de IBM', date: '1981-08-12' },
             { name: 'el Walkman', date: '1979-07-01' },
-            // 1970s
             { name: 'la Constitución', date: '1978-12-06' },
-            { name: 'la Democracia', date: '1977-06-15' },
             { name: 'Star Wars', date: '1977-05-25' },
-            // 1960s
+            { name: 'la Democracia', date: '1977-06-15' },
             { name: 'el hombre en la Luna', date: '1969-07-20' },
             { name: 'el SEAT 600', date: '1957-06-27' },
-            { name: 'la televisión en España', date: '1956-10-28' },
-            // Pre-1950s
+            { name: 'la televisión', date: '1956-10-28' },
             { name: 'la ONU', date: '1945-10-24' },
-            { name: 'el fin de la Guerra Civil', date: '1939-04-01' },
+            { name: 'el fin de la Guerra', date: '1939-04-01' },
             { name: 'la II República', date: '1931-04-14' }
         ];
 
@@ -464,7 +330,6 @@
                 try {
                     const response = await fetch(`data/${file}.json`);
                     const json = await response.json();
-                    // Handle various JSON structures
                     if (json[file]) DATA[file] = json[file];
                     else if (json.presidents) DATA.presidents = json.presidents;
                     else if (json.kings) DATA.kings = json.kings;
@@ -476,20 +341,15 @@
                     else if (json.population) DATA.population = json.population;
                     else if (json.eras) DATA.entertainment = json.eras;
                     else if (json.yearly_inflation) { 
-                        // Convert yearly_inflation object to array format
                         DATA.ipc = Object.entries(json.yearly_inflation).map(([year, rate]) => ({
-                            year: parseInt(year),
-                            rate: rate
+                            year: parseInt(year), rate: rate
                         }));
                     }
-                    else if (json.ipc) { DATA.ipc = json.ipc; DATA.ipc_ref = json.reference_prices_2024; }
+                    else if (json.ipc) { DATA.ipc = json.ipc; }
                     else if (json.comparisons) DATA.buying_power = json.comparisons;
                     else DATA[file] = json;
-                } catch (e) {
-                    console.warn(`Could not load ${file}.json:`, e);
-                }
+                } catch (e) { console.warn(`Could not load ${file}.json:`, e); }
             }));
-            console.log('Data loaded:', DATA);
         }
 
         function findByDate(arr, dateStr) {
@@ -512,9 +372,7 @@
 
         function isWarPeriod(dateStr) {
             const date = new Date(dateStr);
-            const warStart = new Date('1936-07-18');
-            const warEnd = new Date('1939-04-01');
-            return date >= warStart && date <= warEnd;
+            return date >= new Date('1936-07-18') && date <= new Date('1939-04-01');
         }
 
         function getPresident(dateStr) {
@@ -526,189 +384,92 @@
         function getKing(dateStr) {
             const found = findByDate(DATA.kings || [], dateStr);
             if (!found) return { name: null, label: 'Jefe del Estado', hidePresident: false };
-            let label = 'Rey de España';
+            let label = 'Rey';
             let hidePresident = false;
-            if (found.type === 'dictador') {
-                label = 'Jefe del Estado';
-                hidePresident = true; // Hide president during dictatorship
-            }
-            else if (found.type === 'republica') label = 'Presidente de la República';
+            if (found.type === 'dictador') { label = 'Jefe del Estado'; hidePresident = true; }
+            else if (found.type === 'republica') label = 'Presidente';
             else if (found.type === 'guerra') return { name: null, label: null, hidePresident: true };
             return { name: found.name, label, hidePresident };
         }
 
         function getSalary(year) {
             const found = findByYear(DATA.salaries || [], year);
-            
-            // If we have real average salary data, use it
             if (found) {
                 if (found.eur_monthly) {
-                    const pts = Math.round(found.eur_monthly * PESETAS_TO_EUR);
-                    return `${found.eur_monthly.toLocaleString('es-ES')} €/mes (${pts.toLocaleString('es-ES')} pts)`;
+                    return `${found.eur_monthly.toLocaleString('es-ES')} €/mes`;
                 } else if (found.pts_monthly) {
                     const eur = Math.round(found.pts_monthly / PESETAS_TO_EUR);
-                    return `${found.pts_monthly.toLocaleString('es-ES')} pts/mes (${eur} €)`;
+                    return `${found.pts_monthly.toLocaleString('es-ES')} pts`;
                 }
             }
-            
-            // Fallback: estimate from SMI (average ≈ 2.5× minimum wage)
             const smi = findByYear(DATA.smi || [], year);
             if (smi) {
-                const multiplier = 2.5;
-                if (smi.monthly_eur) {
-                    const avgEur = Math.round(smi.monthly_eur * multiplier);
-                    const avgPts = Math.round(avgEur * PESETAS_TO_EUR);
-                    return `~${avgEur.toLocaleString('es-ES')} €/mes (${avgPts.toLocaleString('es-ES')} pts)`;
-                } else if (smi.monthly_pts) {
-                    const avgPts = Math.round(smi.monthly_pts * multiplier);
-                    const avgEur = Math.round(avgPts / PESETAS_TO_EUR);
-                    return `~${avgPts.toLocaleString('es-ES')} pts/mes (${avgEur} €)`;
-                }
+                const mult = 2.5;
+                if (smi.monthly_eur) return `~${Math.round(smi.monthly_eur * mult).toLocaleString('es-ES')} €`;
+                if (smi.monthly_pts) return `~${Math.round(smi.monthly_pts * mult).toLocaleString('es-ES')} pts`;
             }
             return null;
         }
 
         function getHousePrice(year) {
-            const prices = DATA.housing || [];
-            const found = findByYear(prices, year);
+            const found = findByYear(DATA.housing || [], year);
             if (!found) return null;
-            
-            if (found.eur_80m2) {
-                // Post-1985: real data from Sociedad de Tasación
-                const pts = Math.round(found.eur_80m2 * PESETAS_TO_EUR);
-                return `${found.eur_80m2.toLocaleString('es-ES')} €<br><small>(${pts.toLocaleString('es-ES')} pts)</small>`;
-            } else if (found.pts) {
-                // Pre-1985: estimated
-                const eur = Math.round(found.pts / PESETAS_TO_EUR);
-                return `${found.pts.toLocaleString('es-ES')} pts<br><small>(${eur.toLocaleString('es-ES')} €)</small>`;
-            }
+            if (found.eur_80m2) return `${found.eur_80m2.toLocaleString('es-ES')} €`;
+            if (found.pts) return `${found.pts.toLocaleString('es-ES')} pts`;
             return null;
         }
 
         function getMusic(year, month) {
-            // Los 40 started in 1966
-            if (year >= 1966) {
-                const songs = DATA.los40 || [];
-                let found = songs.find(s => s.year === year && s.month === month);
-                if (!found) found = songs.find(s => s.year === year && s.month <= month);
-                if (!found) found = songs.filter(s => s.year <= year).pop();
-                if (found) {
-                    return {
-                        label: 'Nº1 en Los 40',
-                        value: `${found.artist}<br><em>"${found.song}"</em>`
-                    };
-                }
-            }
-            // Pre-1966: use historic music
+            // Try Los 40
+            const los40 = DATA.los40 || [];
+            let found = los40.find(s => s.year === year && s.month === month);
+            if (!found) found = los40.filter(s => s.year === year)[0];
+            if (found) return { artist: found.artist, song: `"${found.song}"`, label: 'Nº1 en España' };
+            
+            // Try historic
             const historic = DATA.music_historic || [];
-            const found = historic.find(s => s.year === year) || historic.filter(s => s.year <= year).pop();
-            if (found) {
-                return {
-                    label: 'Sonaba en la radio',
-                    value: `${found.artist}<br><em>"${found.song}"</em>`
-                };
-            }
+            const histFound = historic.find(s => year >= s.start && year <= s.end);
+            if (histFound) return { artist: histFound.artist, song: `"${histFound.song}"`, label: histFound.label || 'Sonaba en la radio' };
+            
             return null;
         }
 
         function getPopulation(year) {
             const found = findByYear(DATA.population || [], year);
-            return found ? `${found.millions} millones` : null;
+            if (!found) return null;
+            const pop = found.total || found.population;
+            if (pop >= 1000000) return `${(pop / 1000000).toFixed(1)} M`;
+            return pop.toLocaleString('es-ES');
         }
 
         function getEntertainment(year) {
             const eras = DATA.entertainment || [];
             const found = eras.find(e => year >= e.start && year <= e.end);
             if (!found) return null;
-            return {
-                label: found.label || 'En la tele',
-                value: found.primary
-            };
+            const show = found.shows[Math.floor(Math.random() * found.shows.length)];
+            return { value: show, label: found.label || 'En la tele' };
         }
 
         function getBuyingPower(year) {
             const bp = DATA.buying_power || [];
             const found = bp.find(b => year >= b.start && year <= b.end);
             if (!found) return { with_1_eur: null, with_100_eur: null, with_1000_eur: null };
-            return {
-                with_1_eur: found.with_1_eur,
-                with_100_eur: found.with_100_eur,
-                with_1000_eur: found.with_1000_eur
-            };
-        }
-
-        function formatCurrencyLabel(euros, year) {
-            // Show pesetas equivalent for pre-2002, just euros for post-2002
-            if (year < 2002) {
-                const pts = Math.round(euros * PESETAS_TO_EUR);
-                return `Con ${euros}€ (${pts.toLocaleString('es-ES')} pts)`;
-            }
-            return `Con ${euros}€`;
-        }
-
-        function getCoffeePrice(year) {
-            const ipcData = DATA.ipc || [];
-            // Coffee costs ~1.50€ in 2024. Calculate historical price using cumulative inflation.
-            const coffeeNow = 1.50;
-            
-            // Build cumulative index: 2024 = 100, work backwards using yearly rates
-            const sortedYears = ipcData.map(d => d.year).sort((a, b) => b - a);
-            const indices = { 2024: 100 };
-            
-            for (let i = 0; i < sortedYears.length; i++) {
-                const y = sortedYears[i];
-                if (y >= 2024) continue;
-                const nextYear = sortedYears[i - 1] || 2024;
-                const rateData = ipcData.find(d => d.year === nextYear);
-                const rate = rateData ? rateData.rate / 100 : 0;
-                indices[y] = indices[nextYear] / (1 + rate);
-            }
-            
-            const yearIndex = indices[year];
-            if (!yearIndex) return null;
-            
-            const coffeeEur = coffeeNow * (yearIndex / 100);
-            const coffeePts = Math.round(coffeeEur * PESETAS_TO_EUR);
-            
-            if (year < 2002) {
-                // Pre-euro: pesetas first
-                return `${coffeePts} pesetas (${coffeeEur.toFixed(2)} €)`;
-            }
-            // Post-euro: euros first
-            return `${coffeeEur.toFixed(2)} € (${coffeePts} pts)`;
-        }
-
-        function getMoonPhase(date) {
-            const lp = 2551443;
-            const now = new Date(date);
-            const new_moon = new Date(1970, 0, 7, 20, 35, 0);
-            const phase = ((now.getTime() - new_moon.getTime()) / 1000) % lp;
-            const phaseIndex = Math.floor((phase / lp) * 8);
-            return moonPhases[Math.abs(phaseIndex) % 8];
+            return found;
         }
 
         function getOlderThan(birthDate) {
             const birth = new Date(birthDate);
             const birthYear = birth.getFullYear();
-            
-            // Get milestones that came AFTER birth, within ~15 years
             const relevant = milestones.filter(m => {
-                const mDate = new Date(m.date);
-                const mYear = mDate.getFullYear();
+                const mYear = new Date(m.date).getFullYear();
                 return mYear > birthYear && mYear <= birthYear + 15;
             });
-            
             if (relevant.length === 0) {
-                // Fallback: get the closest milestone after birth
-                const after = milestones
-                    .filter(m => new Date(m.date) > birth)
+                const after = milestones.filter(m => new Date(m.date) > birth)
                     .sort((a, b) => new Date(a.date) - new Date(b.date));
                 return after.length > 0 ? after[0].name : 'casi todo';
             }
-            
-            // Random selection
-            const randomIndex = Math.floor(Math.random() * relevant.length);
-            return relevant[randomIndex].name;
+            return relevant[Math.floor(Math.random() * relevant.length)].name;
         }
 
         function setFact(id, value, labelId = null, labelText = null) {
@@ -729,56 +490,54 @@
         }
 
         async function generatePoster() {
+            await loadData();
+            
             const dateInput = document.getElementById('birthdate').value;
-            if (!dateInput) return;
-
             const date = new Date(dateInput);
             const day = date.getDate();
             const month = date.getMonth();
             const year = date.getFullYear();
-            const weekday = date.getDay();
+            const weekday = weekdays[date.getDay()];
 
-            // Update header
             document.getElementById('day').textContent = day;
             document.getElementById('monthYear').textContent = `${months[month]} ${year}`;
-            document.getElementById('weekday').textContent = weekdays[weekday];
+            document.getElementById('weekday').textContent = weekday;
 
-            // Check for war period
             const isWar = isWarPeriod(dateInput);
-            document.getElementById('warNotice').classList.toggle('visible', isWar);
-            document.getElementById('factsGrid').style.display = isWar ? 'none' : 'grid';
-
-            if (isWar) return;
-
-            // Update facts with real data
-            const kingData = getKing(dateInput);
+            const warNotice = document.getElementById('warNotice');
+            const factsContainer = document.getElementById('factsContainer');
             
-            // Hide president during Franco era (dictator was both)
+            if (isWar) {
+                warNotice.classList.add('visible');
+                factsContainer.style.display = 'none';
+                return;
+            } else {
+                warNotice.classList.remove('visible');
+                factsContainer.style.display = 'block';
+            }
+
+            const kingData = getKing(dateInput);
             if (kingData.hidePresident) {
                 setFact('president', null);
             } else {
                 setFact('president', getPresident(dateInput));
             }
-            
             setFact('king', kingData.name, 'kingLabel', kingData.label);
 
             const musicData = getMusic(year, month + 1);
             if (musicData) {
-                setFact('song', musicData.value, 'songLabel', musicData.label);
+                document.getElementById('songArtist').textContent = musicData.artist;
+                document.getElementById('song').textContent = musicData.song;
+                document.getElementById('songLabel').textContent = musicData.label;
+                document.getElementById('factSong').classList.remove('hidden');
             } else {
-                setFact('song', null);
+                document.getElementById('factSong').classList.add('hidden');
             }
 
             setFact('house', getHousePrice(year));
-            setFact('coffee', getCoffeePrice(year));
             setFact('salary', getSalary(year));
             setFact('population', getPopulation(year));
-            
-            const buyingPower = getBuyingPower(year);
-            setFact('buying1', buyingPower.with_1_eur, 'buying1Label', formatCurrencyLabel(1, year));
-            setFact('buying100', buyingPower.with_100_eur, 'buying100Label', formatCurrencyLabel(100, year));
-            setFact('buying1000', buyingPower.with_1000_eur, 'buying1000Label', formatCurrencyLabel(1000, year));
-            
+
             const entertainment = getEntertainment(year);
             if (entertainment) {
                 setFact('tv', entertainment.value, 'tvLabel', entertainment.label);
@@ -786,47 +545,39 @@
                 setFact('tv', null);
             }
 
-            setFact('olderThan', getOlderThan(dateInput));
+            const bp = getBuyingPower(year);
+            document.getElementById('buying1').textContent = bp.with_1_eur || '—';
+            document.getElementById('buying100').textContent = bp.with_100_eur || '—';
+            document.getElementById('buying1000').textContent = bp.with_1000_eur || '—';
+
+            document.getElementById('olderThan').textContent = getOlderThan(dateInput);
         }
 
         async function downloadPDF() {
             const poster = document.getElementById('poster');
-            const dateInput = document.getElementById('birthdate').value;
-            const date = new Date(dateInput);
-            
             poster.classList.add('loading');
             
             try {
                 const canvas = await html2canvas(poster, {
-                    scale: 3,
-                    useCORS: true,
-                    backgroundColor: '#0a0a0a'
+                    scale: 3, backgroundColor: '#0d0d0d', useCORS: true
                 });
-
+                
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'cm',
-                    format: [50, 70]
-                });
-
-                const imgData = canvas.toDataURL('image/png');
-                pdf.addImage(imgData, 'PNG', 0, 0, 50, 70);
-
-                const filename = `el-dia-que-naciste-${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}.pdf`;
-                pdf.save(filename);
-            } catch (e) {
-                console.error('PDF generation error:', e);
+                const pdf = new jsPDF({ orientation: 'portrait', unit: 'cm', format: [50, 70] });
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                pdf.addImage(imgData, 'JPEG', 0, 0, 50, 70);
+                
+                const dateInput = document.getElementById('birthdate').value;
+                pdf.save(`naciste-${dateInput}.pdf`);
+            } catch (error) {
+                console.error('PDF generation failed:', error);
                 alert('Error al generar el PDF. Inténtalo de nuevo.');
-            } finally {
-                poster.classList.remove('loading');
             }
+            
+            poster.classList.remove('loading');
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadData();
-            generatePoster();
-        });
+        document.addEventListener('DOMContentLoaded', generatePoster);
     </script>
 </body>
 </html>
