@@ -44,8 +44,10 @@
             background: #2c3e50; color: #fff; cursor: pointer; transition: all 0.2s;
         }
         .date-input-wrapper button:hover { background: #34495e; }
-        .btn-download { background: #27ae60 !important; }
-        .btn-download:hover { background: #2ecc71 !important; }
+        .btn-share { background: #E1306C !important; }
+        .btn-share:hover { background: #f04080 !important; }
+        .btn-buy { background: #635BFF !important; }
+        .btn-buy:hover { background: #7A73FF !important; }
 
         .poster-container { display: flex; justify-content: center; }
 
@@ -156,6 +158,11 @@
             font-family: 'Cormorant Garamond', serif;
             font-style: italic; color: #000; font-size: 1rem; margin-top: 10px;
         }
+        .watermark {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.5rem; color: #999; letter-spacing: 2px;
+            text-transform: uppercase; margin-top: 15px;
+        }
 
         /* War notice */
         .war-notice {
@@ -187,7 +194,8 @@
                 <label>Fecha:</label>
                 <input type="date" id="birthdate" min="1920-01-01" max="2020-12-31" value="1985-03-15">
                 <button onclick="generatePoster()">Generar</button>
-                <button class="btn-download" onclick="downloadPDF()">📥 Descargar PDF</button>
+                <button class="btn-share" onclick="shareStory()">📱 Stories</button>
+                <button class="btn-buy" onclick="buyPDF()">🛒 Comprar 9,99€</button>
             </div>
         </div>
 
@@ -281,6 +289,7 @@
                         Eres más viejo que <span id="olderThan">Internet</span>
                     </div>
                     <div class="tagline">El día que todo empezó</div>
+                    <div class="watermark">eldiaqueaciste.es</div>
                 </div>
             </div>
         </div>
@@ -655,6 +664,67 @@
             document.getElementById('buying1000').textContent = bp.with_1000_eur || '—';
 
             document.getElementById('olderThan').textContent = getOlderThan(dateInput);
+        }
+
+        async function shareStory() {
+            const poster = document.getElementById('poster');
+            poster.classList.add('loading');
+            
+            try {
+                // Generate story-sized image (1080x1920 = 9:16)
+                const canvas = await html2canvas(poster, {
+                    scale: 3, backgroundColor: '#ffffff', useCORS: true
+                });
+                
+                // Create story canvas with padding
+                const storyCanvas = document.createElement('canvas');
+                storyCanvas.width = 1080;
+                storyCanvas.height = 1920;
+                const ctx = storyCanvas.getContext('2d');
+                
+                // White background
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, 1080, 1920);
+                
+                // Center the poster
+                const scale = Math.min(1000 / canvas.width, 1700 / canvas.height);
+                const w = canvas.width * scale;
+                const h = canvas.height * scale;
+                const x = (1080 - w) / 2;
+                const y = (1920 - h) / 2;
+                ctx.drawImage(canvas, x, y, w, h);
+                
+                // Add CTA text at bottom
+                ctx.fillStyle = '#000';
+                ctx.font = '600 28px Montserrat, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🎁 Descubre el tuyo en eldiaqueaciste.es', 540, 1850);
+                
+                // Download or share
+                const link = document.createElement('a');
+                link.download = 'mi-dia-story.jpg';
+                link.href = storyCanvas.toDataURL('image/jpeg', 0.95);
+                link.click();
+                
+                alert('📱 Imagen descargada! Súbela a tu Instagram Story');
+            } catch (error) {
+                console.error('Story generation failed:', error);
+                alert('Error al generar la imagen');
+            }
+            
+            poster.classList.remove('loading');
+        }
+
+        function buyPDF() {
+            // TODO: Replace with your Stripe link
+            const STRIPE_LINK = 'https://buy.stripe.com/test_XXXXX'; // Placeholder
+            const dateInput = document.getElementById('birthdate').value;
+            
+            // For now, show alert with instructions
+            alert('🛒 Próximamente!\n\nNecesito tu Stripe Publishable Key para activar los pagos.\n\nFecha seleccionada: ' + dateInput);
+            
+            // When Stripe is configured:
+            // window.location.href = STRIPE_LINK + '?client_reference_id=' + dateInput;
         }
 
         async function downloadPDF() {
