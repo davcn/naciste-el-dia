@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -715,16 +716,20 @@
             poster.classList.remove('loading');
         }
 
+        // Stripe configuration
+        const STRIPE_PK = 'pk_test_51TBNbBFdO3OA1pKFxKzAdIdd6oqF1So3htsqovmaB1BGX32Bd0pyY8cyR570G2XBPLLAvkyj6FZ9bCxbWvXib5qN00mjxOJFeL';
+        const STRIPE_PAYMENT_LINK = ''; // Add your Payment Link here
+        
         function buyPDF() {
-            // TODO: Replace with your Stripe link
-            const STRIPE_LINK = 'https://buy.stripe.com/test_XXXXX'; // Placeholder
             const dateInput = document.getElementById('birthdate').value;
             
-            // For now, show alert with instructions
-            alert('🛒 Próximamente!\n\nNecesito tu Stripe Publishable Key para activar los pagos.\n\nFecha seleccionada: ' + dateInput);
+            if (!STRIPE_PAYMENT_LINK) {
+                alert('⚠️ Configura tu Payment Link de Stripe.\n\n1. Ve a Stripe Dashboard → Payment Links\n2. Crea un producto de 9,99€\n3. Copia el link y añádelo al código');
+                return;
+            }
             
-            // When Stripe is configured:
-            // window.location.href = STRIPE_LINK + '?client_reference_id=' + dateInput;
+            // Redirect to Stripe Payment Link with date as reference
+            window.location.href = STRIPE_PAYMENT_LINK + '?client_reference_id=' + encodeURIComponent(dateInput);
         }
 
         async function downloadPDF() {
