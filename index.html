@@ -468,14 +468,9 @@
             return { name: found.name, label, hidePresident };
         }
 
-        function formatMoney(euros, year, decimals = false) {
-            // Always show euros first, with pesetas in parentheses for pre-2002
-            let eurStr;
-            if (decimals && euros < 10) {
-                eurStr = euros.toFixed(2).replace('.', ',');
-            } else {
-                eurStr = Math.round(euros).toLocaleString('es-ES');
-            }
+        function formatMoney(euros, year) {
+            // Always show euros with decimals, pesetas in parentheses for pre-2002
+            const eurStr = euros.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             
             if (year < 2002) {
                 const pts = Math.round(euros * PESETAS_TO_EUR);
@@ -528,7 +523,7 @@
             const decade = Math.floor(year / 10) * 10;
             const factor = inflationFactors[decade] || 0.5;
             const price = basePrice * factor;
-            return formatMoney(price, year, true); // use decimals for coffee
+            return formatMoney(price, year);
         }
 
         function getMusic(year, month) {
