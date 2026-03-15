@@ -125,11 +125,17 @@
         .music-artist { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #2c3e50; font-weight: 600; margin-top: 5px; }
         .music-song { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #555; font-style: italic; }
 
+        /* Prices row */
+        .prices-row {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+            margin: 15px 0; padding: 12px 0;
+            border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+        }
+
         /* Buying power row */
         .buying-row {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
             background: #f8f9fa; padding: 12px; border-radius: 8px;
-            margin-top: auto;
         }
         .buying-item { text-align: center; }
         .buying-amount { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: #2c3e50; font-weight: 600; }
@@ -137,7 +143,7 @@
 
         /* Footer */
         .poster-footer {
-            text-align: center; margin-top: 20px; padding-top: 15px;
+            text-align: center; margin-top: 12px; padding-top: 10px;
             border-top: 1px solid #eee;
         }
         .older-than {
@@ -216,13 +222,8 @@
                             </div>
 
                             <div class="fact" id="factPopulation">
-                                <div class="fact-label">Población de España</div>
+                                <div class="fact-label">Población</div>
                                 <div class="fact-value" id="population">38,4 millones</div>
-                            </div>
-
-                            <div class="fact" id="factTV">
-                                <div class="fact-label" id="tvLabel">En la tele</div>
-                                <div class="fact-value" id="tv">Un, Dos, Tres</div>
                             </div>
                         </div>
 
@@ -234,15 +235,26 @@
                                 <div class="music-song" id="song">"Ay Qué Pesado"</div>
                             </div>
 
-                            <div class="fact" id="factHouse">
-                                <div class="fact-label">Un piso costaba</div>
-                                <div class="fact-value" id="house">—</div>
+                            <div class="fact" id="factTV">
+                                <div class="fact-label" id="tvLabel">En la tele</div>
+                                <div class="fact-value" id="tv">Un, Dos, Tres</div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="fact" id="factSalary">
-                                <div class="fact-label">Salario medio</div>
-                                <div class="fact-value" id="salary">—</div>
-                            </div>
+                    <!-- Prices Row -->
+                    <div class="prices-row">
+                        <div class="fact" id="factHouse">
+                            <div class="fact-label">Una casa costaba</div>
+                            <div class="fact-value" id="house">—</div>
+                        </div>
+                        <div class="fact" id="factCoffee">
+                            <div class="fact-label">Un café costaba</div>
+                            <div class="fact-value" id="coffee">—</div>
+                        </div>
+                        <div class="fact" id="factSalary">
+                            <div class="fact-label">Salario medio</div>
+                            <div class="fact-value" id="salary">—</div>
                         </div>
                     </div>
 
@@ -456,16 +468,33 @@
             return { name: found.name, label, hidePresident };
         }
 
+        function formatMoney(euros, year) {
+            // Always show euros, with pesetas in parentheses for pre-2002
+            const eur = Math.round(euros);
+            if (year < 2002) {
+                const pts = Math.round(euros * PESETAS_TO_EUR);
+                return `${eur.toLocaleString('es-ES')} € (${pts.toLocaleString('es-ES')} pts)`;
+            }
+            return `${eur.toLocaleString('es-ES')} €`;
+        }
+
         function getSalary(year) {
             const found = findByYear(DATA.salaries || [], year);
             if (found) {
-                if (found.eur_monthly) return `${found.eur_monthly.toLocaleString('es-ES')} €/mes`;
-                if (found.pts_monthly) return `${found.pts_monthly.toLocaleString('es-ES')} pts/mes`;
+                if (found.eur_monthly) {
+                    return formatMoney(found.eur_monthly, year) + '/mes';
+                }
+                if (found.pts_monthly) {
+                    const eur = found.pts_monthly / PESETAS_TO_EUR;
+                    return formatMoney(eur, year) + '/mes';
+                }
             }
             const smi = findByYear(DATA.smi || [], year);
             if (smi) {
-                if (smi.monthly_eur) return `~${Math.round(smi.monthly_eur * 2.5).toLocaleString('es-ES')} €/mes`;
-                if (smi.monthly_pts) return `~${Math.round(smi.monthly_pts * 2.5).toLocaleString('es-ES')} pts/mes`;
+                let eur;
+                if (smi.monthly_eur) eur = smi.monthly_eur * 2.5;
+                else if (smi.monthly_pts) eur = (smi.monthly_pts * 2.5) / PESETAS_TO_EUR;
+                if (eur) return '~' + formatMoney(eur, year) + '/mes';
             }
             return null;
         }
@@ -473,9 +502,28 @@
         function getHousePrice(year) {
             const found = findByYear(DATA.housing || [], year);
             if (!found) return null;
-            if (found.eur_80m2) return `${found.eur_80m2.toLocaleString('es-ES')} €`;
-            if (found.pts) return `${found.pts.toLocaleString('es-ES')} pts`;
+            if (found.eur_80m2) return formatMoney(found.eur_80m2, year);
+            if (found.pts) {
+                const eur = found.pts / PESETAS_TO_EUR;
+                return formatMoney(eur, year);
+            }
             return null;
+        }
+
+        function getCoffeePrice(year) {
+            // Coffee ~1.50€ in 2024, estimate historical using rough inflation
+            const basePrice = 1.50;
+            const baseYear = 2024;
+            // Rough inflation multiplier per decade
+            const inflationFactors = {
+                2020: 1.0, 2010: 0.85, 2000: 0.70, 1990: 0.50,
+                1980: 0.30, 1970: 0.15, 1960: 0.08, 1950: 0.04,
+                1940: 0.02, 1930: 0.015, 1920: 0.01
+            };
+            const decade = Math.floor(year / 10) * 10;
+            const factor = inflationFactors[decade] || 0.5;
+            const price = basePrice * factor;
+            return formatMoney(price, year);
         }
 
         function getMusic(year, month) {
@@ -589,6 +637,7 @@
             }
 
             setFact('house', getHousePrice(year));
+            setFact('coffee', getCoffeePrice(year));
             setFact('salary', getSalary(year));
             setFact('population', getPopulation(year));
 
