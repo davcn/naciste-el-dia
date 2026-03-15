@@ -285,33 +285,111 @@
                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         const weekdays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-        const milestones = [
-            { name: 'ChatGPT', date: '2022-11-30' },
-            { name: 'TikTok', date: '2016-09-01' },
-            { name: 'Spotify', date: '2013-09-15' },
-            { name: 'Instagram', date: '2010-10-06' },
-            { name: 'WhatsApp', date: '2009-01-01' },
-            { name: 'el iPhone', date: '2007-06-29' },
-            { name: 'YouTube', date: '2005-02-14' },
-            { name: 'Facebook', date: '2004-02-04' },
-            { name: 'Wikipedia', date: '2001-01-15' },
-            { name: 'Google', date: '1998-09-04' },
-            { name: 'el DVD', date: '1996-11-01' },
-            { name: 'la PlayStation', date: '1995-09-29' },
-            { name: 'Amazon', date: '1994-07-05' },
-            { name: 'Internet', date: '1991-08-06' },
-            { name: 'el CD', date: '1982-08-17' },
-            { name: 'el Walkman', date: '1979-07-01' },
-            { name: 'la Constitución', date: '1978-12-06' },
-            { name: 'Star Wars', date: '1977-05-25' },
-            { name: 'la Democracia', date: '1977-06-15' },
-            { name: 'el hombre en la Luna', date: '1969-07-20' },
-            { name: 'el SEAT 600', date: '1957-06-27' },
-            { name: 'la televisión', date: '1956-10-28' },
-            { name: 'la ONU', date: '1945-10-24' },
-            { name: 'el fin de la Guerra', date: '1939-04-01' },
-            { name: 'la II República', date: '1931-04-14' }
-        ];
+        // One invention/product/discovery per year
+        const milestones = {
+            1920: 'la radio comercial',
+            1921: 'el polígrafo',
+            1922: 'la insulina',
+            1923: 'la televisión mecánica',
+            1924: 'los pañuelos de papel Kleenex',
+            1925: 'el televisor',
+            1926: 'el aerosol',
+            1927: 'la penicilina',
+            1928: 'el chicle',
+            1929: 'los antibióticos',
+            1930: 'el flash fotográfico',
+            1931: 'la II República Española',
+            1932: 'el cine en color',
+            1933: 'la radio FM',
+            1934: 'el nylon',
+            1935: 'el radar',
+            1936: 'el helicóptero moderno',
+            1937: 'el primer avión a reacción',
+            1938: 'el bolígrafo Biro',
+            1939: 'el DDT',
+            1940: 'el jeep',
+            1941: 'el aerosol insecticida',
+            1942: 'la energía nuclear',
+            1943: 'el LSD',
+            1944: 'el ordenador digital',
+            1945: 'la bomba atómica',
+            1946: 'el microondas',
+            1947: 'el transistor',
+            1948: 'el velcro',
+            1949: 'el 2CV de Citroën',
+            1950: 'la tarjeta de crédito',
+            1951: 'la vacuna de la polio',
+            1952: 'el código de barras',
+            1953: 'el ADN',
+            1954: 'la vacuna del sarampión',
+            1955: 'Disneyland',
+            1956: 'el disco duro',
+            1957: 'el SEAT 600',
+            1958: 'el LEGO moderno',
+            1959: 'la Barbie',
+            1960: 'el láser',
+            1961: 'el hombre en el espacio',
+            1962: 'el satélite de comunicaciones',
+            1963: 'la cinta de cassette',
+            1964: 'el BASIC',
+            1965: 'el miniordenador',
+            1966: 'Star Trek',
+            1967: 'el cajero automático',
+            1968: 'el ratón de ordenador',
+            1969: 'el hombre en la Luna',
+            1970: 'el disquete',
+            1971: 'el microprocesador',
+            1972: 'el videojuego Pong',
+            1973: 'el teléfono móvil',
+            1974: 'el código de barras UPC',
+            1975: 'Microsoft',
+            1976: 'Apple',
+            1977: 'Star Wars',
+            1978: 'el primer bebé probeta',
+            1979: 'el Walkman',
+            1980: 'el Pac-Man',
+            1981: 'el IBM PC',
+            1982: 'el CD',
+            1983: 'Internet (TCP/IP)',
+            1984: 'el Macintosh',
+            1985: 'Windows',
+            1986: 'Chernóbil',
+            1987: 'Photoshop',
+            1988: 'la RU-486',
+            1989: 'la World Wide Web',
+            1990: 'Photoshop 1.0',
+            1991: 'Linux',
+            1992: 'el SMS',
+            1993: 'el navegador web Mosaic',
+            1994: 'la PlayStation',
+            1995: 'Windows 95',
+            1996: 'el DVD',
+            1997: 'la oveja Dolly',
+            1998: 'Google',
+            1999: 'Napster',
+            2000: 'la PS2',
+            2001: 'Wikipedia',
+            2002: 'el iPod',
+            2003: 'Skype',
+            2004: 'Facebook',
+            2005: 'YouTube',
+            2006: 'Twitter',
+            2007: 'el iPhone',
+            2008: 'Spotify',
+            2009: 'WhatsApp',
+            2010: 'Instagram',
+            2011: 'Siri',
+            2012: 'Tinder',
+            2013: 'la PS4',
+            2014: 'Alexa',
+            2015: 'Apple Watch',
+            2016: 'TikTok',
+            2017: 'el iPhone X',
+            2018: 'Fortnite',
+            2019: 'Disney+',
+            2020: 'la vacuna COVID',
+            2021: 'el metaverso'
+        };
 
         async function loadData() {
             const files = ['presidents', 'kings', 'salaries', 'smi', 'housing', 'los40', 'music_historic', 'population', 'entertainment', 'ipc', 'buying_power'];
@@ -447,16 +525,16 @@
         function getOlderThan(birthDate) {
             const birth = new Date(birthDate);
             const birthYear = birth.getFullYear();
-            const relevant = milestones.filter(m => {
-                const mYear = new Date(m.date).getFullYear();
-                return mYear > birthYear && mYear <= birthYear + 15;
-            });
-            if (relevant.length === 0) {
-                const after = milestones.filter(m => new Date(m.date) > birth)
-                    .sort((a, b) => new Date(a.date) - new Date(b.date));
-                return after.length > 0 ? after[0].name : 'casi todo';
+            // Return the milestone from the year after birth
+            const nextYear = birthYear + 1;
+            if (milestones[nextYear]) {
+                return milestones[nextYear];
             }
-            return relevant[Math.floor(Math.random() * relevant.length)].name;
+            // Fallback: find the closest year after
+            for (let y = nextYear; y <= 2021; y++) {
+                if (milestones[y]) return milestones[y];
+            }
+            return 'casi todo';
         }
 
         function setFact(id, value, labelId = null, labelText = null) {
