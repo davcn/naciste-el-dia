@@ -1,0 +1,16 @@
+{
+  "shows_by_era": [
+    { "start": 1956, "end": 1965, "shows": ["Los Chiripitifláuticos", "Cesta y Puntos", "Gran Parada"], "primary": "Gran Parada" },
+    { "start": 1966, "end": 1971, "shows": ["Estudio 1", "Crónicas de un Pueblo", "Historias de la Frivolidad"], "primary": "Estudio 1" },
+    { "start": 1972, "end": 1978, "shows": ["Un, Dos, Tres... ¡Responda Otra Vez!", "Curro Jiménez", "Crónicas de un Pueblo"], "primary": "Un, Dos, Tres" },
+    { "start": 1979, "end": 1984, "shows": ["Verano Azul", "Anillos de Oro", "La Bola de Cristal"], "primary": "Verano Azul" },
+    { "start": 1985, "end": 1990, "shows": ["La Bola de Cristal", "Brigada Central", "El Tiempo Entre Costuras"], "primary": "La Bola de Cristal" },
+    { "start": 1991, "end": 1995, "shows": ["Farmacia de Guardia", "¿Quién Sabe Dónde?", "Pelotas"], "primary": "Farmacia de Guardia" },
+    { "start": 1996, "end": 2000, "shows": ["Médico de Familia", "Periodistas", "Manos a la Obra"], "primary": "Médico de Familia" },
+    { "start": 2001, "end": 2005, "shows": ["Cuéntame Cómo Pasó", "Los Serrano", "Aquí No Hay Quien Viva"], "primary": "Cuéntame Cómo Pasó" },
+    { "start": 2006, "end": 2010, "shows": ["Aquí No Hay Quien Viva", "La Que Se Avecina", "Aída"], "primary": "La Que Se Avecina" },
+    { "start": 2011, "end": 2015, "shows": ["La Que Se Avecina", "El Príncipe", "Velvet"], "primary": "La Que Se Avecina" },
+    { "start": 2016, "end": 2020, "shows": ["La Casa de Papel", "Vis a Vis", "Elite"], "primary": "La Casa de Papel" },
+    { "start": 2021, "end": 2026, "shows": ["La Casa de Papel", "El Pueblo", "HIT"], "primary": "La Casa de Papel" }
+  ]
+}

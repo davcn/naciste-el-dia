@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Día Que Naciste — Canvas Personalizado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+            min-height: 100vh;
+            color: #fff;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        .controls-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .date-input-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: #2a2a2a;
+            padding: 15px 25px;
+            border-radius: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .date-input-wrapper label {
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        .date-input-wrapper input {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            border: 2px solid #444;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .date-input-wrapper button {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #c9a227;
+            color: #1a1a1a;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .date-input-wrapper button:hover {
+            background: #ddb832;
+        }
+
+        .btn-download {
+            background: #2d5a27 !important;
+            color: #fff !important;
+        }
+
+        .btn-download:hover {
+            background: #3d7a37 !important;
+        }
+
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .poster-container {
+            display: flex;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        /* 50x70cm ratio = 5:7 = 0.714 */
+        .poster {
+            width: 500px;
+            min-height: 700px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 3px solid #c9a227;
+            border-radius: 4px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(201, 162, 39, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            pointer-events: none;
+        }
+
+        .poster-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .poster-header .day-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            color: #c9a227;
+            line-height: 1;
+        }
+
+        .poster-header .month-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 5px;
+        }
+
+        .poster-header .weekday {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 8px;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9a227, transparent);
+            margin: 15px 0;
+        }
+
+        .poster-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: #c9a227;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 15px;
+            flex: 1;
+        }
+
+        .fact {
+            text-align: center;
+            padding: 8px 5px;
+        }
+
+        .fact.hidden {
+            display: none !important;
+        }
+
+        .fact-label {
+            font-size: 0.6rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .fact-value {
+            font-size: 0.85rem;
+            color: #fff;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .fact-value.highlight {
+            color: #c9a227;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+        }
+
+        .fact.full-width {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            padding: 12px 5px;
+            margin: 3px 0;
+        }
+
+        .poster-footer {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .poster-footer .tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .war-notice {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-style: italic;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            margin: 10px 0;
+            display: none;
+        }
+
+        .war-notice.visible {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .poster {
+                width: 100%;
+                max-width: 360px;
+                min-height: 500px;
+                padding: 25px;
+            }
+
+            .poster-header .day-number {
+                font-size: 3.5rem;
+            }
+
+            .facts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fact.full-width {
+                grid-column: 1;
+            }
+
+            .date-input-wrapper {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .controls-section, header {
+                display: none;
+            }
+            .poster {
+                box-shadow: none;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>El Día Que Naciste</h1>
+            <p>Un viaje a la España del día en que llegaste al mundo</p>
+        </header>
+
+        <div class="controls-section">
+            <div class="date-input-wrapper">
+                <label for="birthdate">Fecha de nacimiento:</label>
+                <input type="date" id="birthdate" min="1920-01-01" max="2020-12-31" value="1985-03-15">
+                <button onclick="generatePoster()">Generar Canvas</button>
+                <button class="btn-download" onclick="downloadPDF()">📥 Descargar PDF</button>
+            </div>
+        </div>
+
+        <div class="poster-container">
+            <div class="poster" id="poster">
+                <div class="poster-header">
+                    <div class="day-number" id="day">15</div>
+                    <div class="month-year" id="monthYear">Marzo 1985</div>
+                    <div class="weekday" id="weekday">Viernes</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="poster-title">España en este día</div>
+
+                <div class="war-notice" id="warNotice">
+                    España vivía tiempos de guerra civil.<br>
+                    <small>1936 – 1939</small>
+                </div>
+
+                <div class="facts-grid" id="factsGrid">
+                    <div class="fact" id="factPresident">
+                        <div class="fact-label">Presidente del Gobierno</div>
+                        <div class="fact-value" id="president">Felipe González</div>
+                    </div>
+                    <div class="fact" id="factKing">
+                        <div class="fact-label" id="kingLabel">Jefe del Estado</div>
+                        <div class="fact-value" id="king">Juan Carlos I</div>
+                    </div>
+
+                    <div class="fact" id="factSong">
+                        <div class="fact-label" id="songLabel">Nº1 en Los 40</div>
+                        <div class="fact-value" id="song">—</div>
+                    </div>
+                    <div class="fact" id="factHouse">
+                        <div class="fact-label">Un piso costaba</div>
+                        <div class="fact-value" id="house">—</div>
+                    </div>
+
+                    <div class="fact full-width" id="factCoffee">
+                        <div class="fact-label">Un café costaba</div>
+                        <div class="fact-value highlight" id="coffee">45 pesetas (0,27 €)</div>
+                    </div>
+
+                    <div class="fact" id="factSalary">
+                        <div class="fact-label">Salario medio</div>
+                        <div class="fact-value" id="salary">—</div>
+                    </div>
+                    <div class="fact" id="factPopulation">
+                        <div class="fact-label">Población de España</div>
+                        <div class="fact-value" id="population">38,4 millones</div>
+                    </div>
+
+                    <div class="fact full-width" id="factBuying1">
+                        <div class="fact-label" id="buying1Label">Con 1€ (166 pts) comprabas</div>
+                        <div class="fact-value highlight" id="buying1">—</div>
+                    </div>
+
+                    <div class="fact" id="factBuying100">
+                        <div class="fact-label" id="buying100Label">Con 100€ (16.639 pts)</div>
+                        <div class="fact-value" id="buying100">—</div>
+                    </div>
+                    <div class="fact" id="factBuying1000">
+                        <div class="fact-label" id="buying1000Label">Con 1.000€ (166.386 pts)</div>
+                        <div class="fact-value" id="buying1000">—</div>
+                    </div>
+
+                    <div class="fact full-width" id="factTV">
+                        <div class="fact-label" id="tvLabel">En la tele</div>
+                        <div class="fact-value" id="tv">Un, Dos, Tres</div>
+                    </div>
+
+                    <div class="fact" id="factOlderThan">
+                        <div class="fact-label">Eres más viejo que</div>
+                        <div class="fact-value" id="olderThan">Internet</div>
+                    </div>
+                </div>
+
+                <div class="poster-footer">
+                    <div class="tagline">El día que todo empezó</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data stores
+        let DATA = {
+            presidents: [],
+            kings: [],
+            salaries: [],
+            housing: [],
+            los40: [],
+            music_historic: [],
+            population: [],
+            entertainment: [],
+            buying_power: [],
+            ipc: []
+        };
+
+        const PESETAS_TO_EUR = 166.386;
+
+        const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+                       'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        const weekdays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const moonPhases = ['🌑 Luna nueva', '🌒 Creciente', '🌓 Cuarto creciente', '🌔 Gibosa creciente', 
+                          '🌕 Luna llena', '🌖 Gibosa menguante', '🌗 Cuarto menguante', '🌘 Menguante'];
+
+        const milestones = [
+            { name: 'ChatGPT', date: '2022-11-30' },
+            { name: 'TikTok', date: '2016-09-01' },
+            { name: 'Instagram', date: '2010-10-06' },
+            { name: 'WhatsApp', date: '2009-01-01' },
+            { name: 'el iPhone', date: '2007-06-29' },
+            { name: 'YouTube', date: '2005-02-14' },
+            { name: 'Facebook', date: '2004-02-04' },
+            { name: 'Wikipedia', date: '2001-01-15' },
+            { name: 'Google', date: '1998-09-04' },
+            { name: 'el DVD', date: '1996-11-01' },
+            { name: 'Amazon', date: '1994-07-05' },
+            { name: 'Internet', date: '1991-08-06' },
+            { name: 'el Euro', date: '1999-01-01' },
+            { name: 'la Constitución', date: '1978-12-06' },
+            { name: 'la Democracia', date: '1977-06-15' },
+            { name: 'la televisión en España', date: '1956-10-28' },
+            { name: 'el SEAT 600', date: '1957-06-27' },
+            { name: 'la ONU', date: '1945-10-24' },
+            { name: 'el fin de la Guerra Civil', date: '1939-04-01' }
+        ];
+
+        async function loadData() {
+            const files = ['presidents', 'kings', 'salaries', 'housing', 'los40', 'music_historic', 'population', 'entertainment', 'ipc', 'buying_power'];
+            await Promise.all(files.map(async (file) => {
+                try {
+                    const response = await fetch(`data/${file}.json`);
+                    const json = await response.json();
+                    // Handle various JSON structures
+                    if (json[file]) DATA[file] = json[file];
+                    else if (json.presidents) DATA.presidents = json.presidents;
+                    else if (json.kings) DATA.kings = json.kings;
+                    else if (json.salaries) DATA.salaries = json.salaries;
+                    else if (json.prices) DATA.housing = json.prices;
+                    else if (json.number_ones) DATA.los40 = json.number_ones;
+                    else if (json.songs) DATA.music_historic = json.songs;
+                    else if (json.population) DATA.population = json.population;
+                    else if (json.eras) DATA.entertainment = json.eras;
+                    else if (json.ipc) { DATA.ipc = json.ipc; DATA.ipc_ref = json.reference_prices_2024; }
+                    else if (json.comparisons) DATA.buying_power = json.comparisons;
+                    else DATA[file] = json;
+                } catch (e) {
+                    console.warn(`Could not load ${file}.json:`, e);
+                }
+            }));
+            console.log('Data loaded:', DATA);
+        }
+
+        function findByDate(arr, dateStr) {
+            const date = new Date(dateStr);
+            return arr.find(item => {
+                const start = new Date(item.start);
+                const end = item.end ? new Date(item.end) : new Date();
+                return date >= start && date <= end;
+            });
+        }
+
+        function findByYear(arr, year) {
+            let found = arr.find(item => item.year === year);
+            if (!found) {
+                const earlier = arr.filter(item => item.year < year);
+                found = earlier.length > 0 ? earlier[earlier.length - 1] : null;
+            }
+            return found;
+        }
+
+        function isWarPeriod(dateStr) {
+            const date = new Date(dateStr);
+            const warStart = new Date('1936-07-18');
+            const warEnd = new Date('1939-04-01');
+            return date >= warStart && date <= warEnd;
+        }
+
+        function getPresident(dateStr) {
+            if (isWarPeriod(dateStr)) return null;
+            const found = findByDate(DATA.presidents || [], dateStr);
+            return found ? found.name : null;
+        }
+
+        function getKing(dateStr) {
+            const found = findByDate(DATA.kings || [], dateStr);
+            if (!found) return { name: null, label: 'Jefe del Estado' };
+            let label = 'Rey de España';
+            if (found.type === 'dictador') label = 'Jefe del Estado';
+            else if (found.type === 'republica') label = 'Régimen';
+            else if (found.type === 'guerra') return { name: null, label: null };
+            return { name: found.title || found.name, label };
+        }
+
+        function getSalary(year) {
+            const found = findByYear(DATA.salaries || [], year);
+            if (!found) return null;
+            
+            if (found.eur_monthly) {
+                // Post-euro: show euros + pesetas equivalent
+                const pts = Math.round(found.eur_monthly * PESETAS_TO_EUR);
+                return `${found.eur_monthly.toLocaleString('es-ES')} €/mes<br><small>(${pts.toLocaleString('es-ES')} pts)</small>`;
+            } else if (found.pts_monthly) {
+                // Pre-euro: show pesetas + euros equivalent
+                const eur = Math.round(found.pts_monthly / PESETAS_TO_EUR);
+                return `${found.pts_monthly.toLocaleString('es-ES')} pts/mes<br><small>(${eur} €)</small>`;
+            }
+            return null;
+        }
+
+        function getHousePrice(year) {
+            const prices = DATA.housing || [];
+            const found = findByYear(prices, year);
+            if (!found) return null;
+            
+            if (found.eur_80m2) {
+                // Post-1985: real data from Sociedad de Tasación
+                const pts = Math.round(found.eur_80m2 * PESETAS_TO_EUR);
+                return `${found.eur_80m2.toLocaleString('es-ES')} €<br><small>(${pts.toLocaleString('es-ES')} pts)</small>`;
+            } else if (found.pts) {
+                // Pre-1985: estimated
+                const eur = Math.round(found.pts / PESETAS_TO_EUR);
+                return `${found.pts.toLocaleString('es-ES')} pts<br><small>(${eur.toLocaleString('es-ES')} €)</small>`;
+            }
+            return null;
+        }
+
+        function getMusic(year, month) {
+            // Los 40 started in 1966
+            if (year >= 1966) {
+                const songs = DATA.los40 || [];
+                let found = songs.find(s => s.year === year && s.month === month);
+                if (!found) found = songs.find(s => s.year === year && s.month <= month);
+                if (!found) found = songs.filter(s => s.year <= year).pop();
+                if (found) {
+                    return {
+                        label: 'Nº1 en Los 40',
+                        value: `${found.artist}<br><em>"${found.song}"</em>`
+                    };
+                }
+            }
+            // Pre-1966: use historic music
+            const historic = DATA.music_historic || [];
+            const found = historic.find(s => s.year === year) || historic.filter(s => s.year <= year).pop();
+            if (found) {
+                return {
+                    label: 'Sonaba en la radio',
+                    value: `${found.artist}<br><em>"${found.song}"</em>`
+                };
+            }
+            return null;
+        }
+
+        function getPopulation(year) {
+            const found = findByYear(DATA.population || [], year);
+            return found ? `${found.millions} millones` : null;
+        }
+
+        function getEntertainment(year) {
+            const eras = DATA.entertainment || [];
+            const found = eras.find(e => year >= e.start && year <= e.end);
+            if (!found) return null;
+            return {
+                label: found.label || 'En la tele',
+                value: found.primary
+            };
+        }
+
+        function getBuyingPower(year) {
+            const bp = DATA.buying_power || [];
+            const found = bp.find(b => year >= b.start && year <= b.end);
+            if (!found) return { with_1_eur: null, with_100_eur: null, with_1000_eur: null };
+            return {
+                with_1_eur: found.with_1_eur,
+                with_100_eur: found.with_100_eur,
+                with_1000_eur: found.with_1000_eur
+            };
+        }
+
+        function formatCurrencyLabel(euros, year) {
+            // Show pesetas equivalent for pre-2002, just euros for post-2002
+            if (year < 2002) {
+                const pts = Math.round(euros * PESETAS_TO_EUR);
+                return `Con ${euros}€ (${pts.toLocaleString('es-ES')} pts)`;
+            }
+            return `Con ${euros}€`;
+        }
+
+        function getCoffeePrice(year) {
+            const ipcData = DATA.ipc || [];
+            const refPrices = DATA.ipc_ref || { coffee_eur: 1.50 };
+            const currentIPC = (ipcData.find(i => i.year === 2024) || {}).index || 41.30;
+            const yearData = findByYear(ipcData, year);
+            if (!yearData) return null;
+            
+            const coffeeEur = refPrices.coffee_eur * (yearData.index / currentIPC);
+            const coffeePts = Math.round(coffeeEur * PESETAS_TO_EUR);
+            
+            if (year < 2002) {
+                // Pre-euro: pesetas first
+                return `${coffeePts} pesetas<br><small>(${coffeeEur.toFixed(2)} €)</small>`;
+            }
+            // Post-euro: euros first
+            return `${coffeeEur.toFixed(2)} €<br><small>(${coffeePts} pts)</small>`;
+        }
+
+        function getMoonPhase(date) {
+            const lp = 2551443;
+            const now = new Date(date);
+            const new_moon = new Date(1970, 0, 7, 20, 35, 0);
+            const phase = ((now.getTime() - new_moon.getTime()) / 1000) % lp;
+            const phaseIndex = Math.floor((phase / lp) * 8);
+            return moonPhases[Math.abs(phaseIndex) % 8];
+        }
+
+        function getOlderThan(birthDate) {
+            const birth = new Date(birthDate);
+            for (const milestone of milestones) {
+                if (birth < new Date(milestone.date)) {
+                    return milestone.name;
+                }
+            }
+            return 'casi todo';
+        }
+
+        function setFact(id, value, labelId = null, labelText = null) {
+            const el = document.getElementById(id);
+            const factEl = document.getElementById('fact' + id.charAt(0).toUpperCase() + id.slice(1));
+            
+            if (value === null || value === undefined) {
+                if (factEl) factEl.classList.add('hidden');
+                return;
+            }
+            
+            if (factEl) factEl.classList.remove('hidden');
+            if (el) el.innerHTML = value;
+            if (labelId && labelText) {
+                const labelEl = document.getElementById(labelId);
+                if (labelEl) labelEl.textContent = labelText;
+            }
+        }
+
+        async function generatePoster() {
+            const dateInput = document.getElementById('birthdate').value;
+            if (!dateInput) return;
+
+            const date = new Date(dateInput);
+            const day = date.getDate();
+            const month = date.getMonth();
+            const year = date.getFullYear();
+            const weekday = date.getDay();
+
+            // Update header
+            document.getElementById('day').textContent = day;
+            document.getElementById('monthYear').textContent = `${months[month]} ${year}`;
+            document.getElementById('weekday').textContent = weekdays[weekday];
+
+            // Check for war period
+            const isWar = isWarPeriod(dateInput);
+            document.getElementById('warNotice').classList.toggle('visible', isWar);
+            document.getElementById('factsGrid').style.display = isWar ? 'none' : 'grid';
+
+            if (isWar) return;
+
+            // Update facts with real data
+            setFact('president', getPresident(dateInput));
+            
+            const kingData = getKing(dateInput);
+            setFact('king', kingData.name, 'kingLabel', kingData.label);
+
+            const musicData = getMusic(year, month + 1);
+            if (musicData) {
+                setFact('song', musicData.value, 'songLabel', musicData.label);
+            } else {
+                setFact('song', null);
+            }
+
+            setFact('house', getHousePrice(year));
+            setFact('coffee', getCoffeePrice(year));
+            setFact('salary', getSalary(year));
+            setFact('population', getPopulation(year));
+            
+            const buyingPower = getBuyingPower(year);
+            setFact('buying1', buyingPower.with_1_eur, 'buying1Label', formatCurrencyLabel(1, year));
+            setFact('buying100', buyingPower.with_100_eur, 'buying100Label', formatCurrencyLabel(100, year));
+            setFact('buying1000', buyingPower.with_1000_eur, 'buying1000Label', formatCurrencyLabel(1000, year));
+            
+            const entertainment = getEntertainment(year);
+            if (entertainment) {
+                setFact('tv', entertainment.value, 'tvLabel', entertainment.label);
+            } else {
+                setFact('tv', null);
+            }
+
+            setFact('olderThan', getOlderThan(dateInput));
+        }
+
+        async function downloadPDF() {
+            const poster = document.getElementById('poster');
+            const dateInput = document.getElementById('birthdate').value;
+            const date = new Date(dateInput);
+            
+            poster.classList.add('loading');
+            
+            try {
+                const canvas = await html2canvas(poster, {
+                    scale: 3,
+                    useCORS: true,
+                    backgroundColor: '#0a0a0a'
+                });
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'cm',
+                    format: [50, 70]
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addImage(imgData, 'PNG', 0, 0, 50, 70);
+
+                const filename = `el-dia-que-naciste-${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}.pdf`;
+                pdf.save(filename);
+            } catch (e) {
+                console.error('PDF generation error:', e);
+                alert('Error al generar el PDF. Inténtalo de nuevo.');
+            } finally {
+                poster.classList.remove('loading');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadData();
+            generatePoster();
+        });
+    </script>
+</body>
+</html>

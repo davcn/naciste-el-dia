@@ -1,0 +1,105 @@
+{
+  "description": "Fun purchasing power comparisons by era. All values shown with pesetas equivalent.",
+  "pesetas_to_euro": 166.386,
+  "comparisons": [
+    {
+      "start": 1920, "end": 1935,
+      "with_1_eur": "10 cafés",
+      "with_100_eur": "1.000 cafés",
+      "with_1000_eur": "Una casa de pueblo",
+      "iconic_purchase": "Un gramófono"
+    },
+    {
+      "start": 1936, "end": 1939,
+      "with_1_eur": null,
+      "with_100_eur": null,
+      "with_1000_eur": null,
+      "iconic_purchase": null,
+      "note": "Tiempos de guerra"
+    },
+    {
+      "start": 1940, "end": 1949,
+      "with_1_eur": "6 cafés",
+      "with_100_eur": "600 cafés",
+      "with_1000_eur": "Un piso pequeño",
+      "iconic_purchase": "Una radio de válvulas"
+    },
+    {
+      "start": 1950, "end": 1959,
+      "with_1_eur": "5 cafés",
+      "with_100_eur": "500 cafés",
+      "with_1000_eur": "Un piso pequeño",
+      "iconic_purchase": "Una nevera"
+    },
+    {
+      "start": 1960, "end": 1969,
+      "with_1_eur": "4 cafés",
+      "with_100_eur": "400 cafés",
+      "with_1000_eur": "Un SEAT 600",
+      "iconic_purchase": "Tu primera televisión"
+    },
+    {
+      "start": 1970, "end": 1975,
+      "with_1_eur": "3 cafés",
+      "with_100_eur": "300 cafés",
+      "with_1000_eur": "Un SEAT 127",
+      "iconic_purchase": "Una lavadora automática"
+    },
+    {
+      "start": 1976, "end": 1982,
+      "with_1_eur": "2,5 cafés",
+      "with_100_eur": "250 cafés",
+      "with_1000_eur": "Un SEAT Panda",
+      "iconic_purchase": "Un vídeo VHS"
+    },
+    {
+      "start": 1983, "end": 1989,
+      "with_1_eur": "2 cafés",
+      "with_100_eur": "200 cafés",
+      "with_1000_eur": "Un SEAT Ibiza usado",
+      "iconic_purchase": "Un walkman Sony"
+    },
+    {
+      "start": 1990, "end": 1995,
+      "with_1_eur": "1,5 cafés",
+      "with_100_eur": "150 cafés",
+      "with_1000_eur": "Un viaje al Caribe",
+      "iconic_purchase": "Un microondas"
+    },
+    {
+      "start": 1996, "end": 2001,
+      "with_1_eur": "1,3 cafés",
+      "with_100_eur": "130 cafés",
+      "with_1000_eur": "Un ordenador Pentium",
+      "iconic_purchase": "Tu primer móvil Nokia"
+    },
+    {
+      "start": 2002, "end": 2007,
+      "with_1_eur": "1 café",
+      "with_100_eur": "100 cafés",
+      "with_1000_eur": "Una PS2 + TV plana",
+      "iconic_purchase": "Un iPod"
+    },
+    {
+      "start": 2008, "end": 2014,
+      "with_1_eur": "0,8 cafés",
+      "with_100_eur": "80 cafés",
+      "with_1000_eur": "Un iPhone 4",
+      "iconic_purchase": "Un smartphone"
+    },
+    {
+      "start": 2015, "end": 2020,
+      "with_1_eur": "0,7 cafés",
+      "with_100_eur": "70 cafés",
+      "with_1000_eur": "Vuelo NY ida/vuelta",
+      "iconic_purchase": "Netflix (100 meses)"
+    },
+    {
+      "start": 2021, "end": 2030,
+      "with_1_eur": "0,6 cafés",
+      "with_100_eur": "60 cafés",
+      "with_1000_eur": "Un iPhone reacondicionado",
+      "iconic_purchase": "Gafas de realidad virtual"
+    }
+  ]
+}

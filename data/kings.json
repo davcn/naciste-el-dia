@@ -1,0 +1,10 @@
+{
+  "kings": [
+    { "name": "Alfonso XIII", "start": "1886-05-17", "end": "1931-04-14", "type": "rey" },
+    { "name": "Segunda República", "start": "1931-04-14", "end": "1936-07-18", "type": "republica", "title": "República" },
+    { "name": "Guerra Civil", "start": "1936-07-18", "end": "1939-04-01", "type": "guerra", "title": "España en guerra" },
+    { "name": "Francisco Franco", "start": "1939-04-01", "end": "1975-11-20", "type": "dictador", "title": "Jefe del Estado" },
+    { "name": "Juan Carlos I", "start": "1975-11-22", "end": "2014-06-19", "type": "rey" },
+    { "name": "Felipe VI", "start": "2014-06-19", "end": null, "type": "rey" }
+  ]
+}

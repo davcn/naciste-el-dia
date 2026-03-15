@@ -1,0 +1,96 @@
+{
+  "description": "Entertainment by era - TV shows, radio, cinema for pre-TV years",
+  "eras": [
+    {
+      "start": 1920, "end": 1935,
+      "type": "radio_cine",
+      "label": "En el cine",
+      "items": ["Cine mudo", "Zarzuela", "Varietés"],
+      "primary": "Zarzuela y varietés"
+    },
+    {
+      "start": 1936, "end": 1939,
+      "type": "guerra",
+      "label": "En tiempos de guerra",
+      "items": ["Noticiarios", "Propaganda"],
+      "primary": "Noticiarios de guerra"
+    },
+    {
+      "start": 1940, "end": 1955,
+      "type": "radio_cine",
+      "label": "En la radio",
+      "items": ["Radio Nacional", "Seriales radiofónicos", "Ama Rosa"],
+      "primary": "Seriales de Radio Nacional"
+    },
+    {
+      "start": 1956, "end": 1965,
+      "type": "tv_early",
+      "label": "En TVE",
+      "items": ["TVE (recién inaugurada)", "Telediario", "Gran Parada"],
+      "primary": "Gran Parada (TVE)"
+    },
+    {
+      "start": 1966, "end": 1971,
+      "type": "tv",
+      "label": "En la tele",
+      "items": ["Estudio 1", "Crónicas de un Pueblo"],
+      "primary": "Estudio 1"
+    },
+    {
+      "start": 1972, "end": 1978,
+      "type": "tv",
+      "label": "En la tele",
+      "items": ["Un, Dos, Tres", "Curro Jiménez"],
+      "primary": "Un, Dos, Tres"
+    },
+    {
+      "start": 1979, "end": 1984,
+      "type": "tv",
+      "label": "En la tele",
+      "items": ["Verano Azul", "La Bola de Cristal"],
+      "primary": "Verano Azul"
+    },
+    {
+      "start": 1985, "end": 1990,
+      "type": "tv",
+      "label": "En la tele",
+      "items": ["La Bola de Cristal", "Alf"],
+      "primary": "La Bola de Cristal"
+    },
+    {
+      "start": 1991, "end": 1995,
+      "type": "tv",
+      "label": "En la tele",
+      "items": ["Farmacia de Guardia", "¿Quién Sabe Dónde?"],
+      "primary": "Farmacia de Guardia"
+    },
+    {
+      "start": 1996, "end": 2000,
+      "type": "tv",
+      "label": "En la tele",
+      "items": ["Médico de Familia", "Periodistas"],
+      "primary": "Médico de Familia"
+    },
+    {
+      "start": 2001, "end": 2006,
+      "type": "tv",
+      "label": "En la tele",
+      "items": ["Cuéntame", "Los Serrano", "Aquí No Hay Quien Viva"],
+      "primary": "Aquí No Hay Quien Viva"
+    },
+    {
+      "start": 2007, "end": 2015,
+      "type": "tv",
+      "label": "En la tele",
+      "items": ["La Que Se Avecina", "El Príncipe"],
+      "primary": "La Que Se Avecina"
+    },
+    {
+      "start": 2016, "end": 2030,
+      "type": "tv",
+      "label": "En Netflix",
+      "items": ["La Casa de Papel", "Élite"],
+      "primary": "La Casa de Papel"
+    }
+  ]
+}
