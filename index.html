@@ -421,25 +421,41 @@
                           '🌕 Luna llena', '🌖 Gibosa menguante', '🌗 Cuarto menguante', '🌘 Menguante'];
 
         const milestones = [
+            // 2020s
             { name: 'ChatGPT', date: '2022-11-30' },
+            // 2010s
             { name: 'TikTok', date: '2016-09-01' },
+            { name: 'Spotify España', date: '2013-09-15' },
             { name: 'Instagram', date: '2010-10-06' },
+            // 2000s
             { name: 'WhatsApp', date: '2009-01-01' },
             { name: 'el iPhone', date: '2007-06-29' },
+            { name: 'Twitter', date: '2006-07-15' },
             { name: 'YouTube', date: '2005-02-14' },
             { name: 'Facebook', date: '2004-02-04' },
             { name: 'Wikipedia', date: '2001-01-15' },
+            // 1990s
             { name: 'Google', date: '1998-09-04' },
             { name: 'el DVD', date: '1996-11-01' },
+            { name: 'la PlayStation', date: '1995-09-29' },
             { name: 'Amazon', date: '1994-07-05' },
-            { name: 'Internet', date: '1991-08-06' },
-            { name: 'el Euro', date: '1999-01-01' },
+            { name: 'Internet público', date: '1991-08-06' },
+            // 1980s
+            { name: 'el CD', date: '1982-08-17' },
+            { name: 'el PC de IBM', date: '1981-08-12' },
+            { name: 'el Walkman', date: '1979-07-01' },
+            // 1970s
             { name: 'la Constitución', date: '1978-12-06' },
             { name: 'la Democracia', date: '1977-06-15' },
-            { name: 'la televisión en España', date: '1956-10-28' },
+            { name: 'Star Wars', date: '1977-05-25' },
+            // 1960s
+            { name: 'el hombre en la Luna', date: '1969-07-20' },
             { name: 'el SEAT 600', date: '1957-06-27' },
+            { name: 'la televisión en España', date: '1956-10-28' },
+            // Pre-1950s
             { name: 'la ONU', date: '1945-10-24' },
-            { name: 'el fin de la Guerra Civil', date: '1939-04-01' }
+            { name: 'el fin de la Guerra Civil', date: '1939-04-01' },
+            { name: 'la II República', date: '1931-04-14' }
         ];
 
         async function loadData() {
@@ -669,12 +685,15 @@
 
         function getOlderThan(birthDate) {
             const birth = new Date(birthDate);
-            for (const milestone of milestones) {
-                if (birth < new Date(milestone.date)) {
-                    return milestone.name;
-                }
-            }
-            return 'casi todo';
+            // Get all milestones the person is older than
+            const olderThan = milestones
+                .filter(m => birth < new Date(m.date))
+                .slice(0, 4); // Show up to 4
+            
+            if (olderThan.length === 0) return 'casi todo';
+            
+            // Format as list
+            return olderThan.map(m => m.name).join(', ');
         }
 
         function setFact(id, value, labelId = null, labelText = null) {
