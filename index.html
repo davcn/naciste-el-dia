@@ -443,7 +443,7 @@
         ];
 
         async function loadData() {
-            const files = ['presidents', 'kings', 'salaries', 'housing', 'los40', 'music_historic', 'population', 'entertainment', 'ipc', 'buying_power'];
+            const files = ['presidents', 'kings', 'salaries', 'smi', 'housing', 'los40', 'music_historic', 'population', 'entertainment', 'ipc', 'buying_power'];
             await Promise.all(files.map(async (file) => {
                 try {
                     const response = await fetch(`data/${file}.json`);
@@ -453,6 +453,7 @@
                     else if (json.presidents) DATA.presidents = json.presidents;
                     else if (json.kings) DATA.kings = json.kings;
                     else if (json.salaries) DATA.salaries = json.salaries;
+                    else if (json.smi) DATA.smi = json.smi;
                     else if (json.prices) DATA.housing = json.prices;
                     else if (json.number_ones) DATA.los40 = json.number_ones;
                     else if (json.songs) DATA.music_historic = json.songs;
@@ -518,16 +519,31 @@
 
         function getSalary(year) {
             const found = findByYear(DATA.salaries || [], year);
-            if (!found) return null;
             
-            if (found.eur_monthly) {
-                // Post-euro: show euros + pesetas equivalent
-                const pts = Math.round(found.eur_monthly * PESETAS_TO_EUR);
-                return `${found.eur_monthly.toLocaleString('es-ES')} €/mes<br><small>(${pts.toLocaleString('es-ES')} pts)</small>`;
-            } else if (found.pts_monthly) {
-                // Pre-euro: show pesetas + euros equivalent
-                const eur = Math.round(found.pts_monthly / PESETAS_TO_EUR);
-                return `${found.pts_monthly.toLocaleString('es-ES')} pts/mes<br><small>(${eur} €)</small>`;
+            // If we have real average salary data, use it
+            if (found) {
+                if (found.eur_monthly) {
+                    const pts = Math.round(found.eur_monthly * PESETAS_TO_EUR);
+                    return `${found.eur_monthly.toLocaleString('es-ES')} €/mes (${pts.toLocaleString('es-ES')} pts)`;
+                } else if (found.pts_monthly) {
+                    const eur = Math.round(found.pts_monthly / PESETAS_TO_EUR);
+                    return `${found.pts_monthly.toLocaleString('es-ES')} pts/mes (${eur} €)`;
+                }
+            }
+            
+            // Fallback: estimate from SMI (average ≈ 2.5× minimum wage)
+            const smi = findByYear(DATA.smi || [], year);
+            if (smi) {
+                const multiplier = 2.5;
+                if (smi.monthly_eur) {
+                    const avgEur = Math.round(smi.monthly_eur * multiplier);
+                    const avgPts = Math.round(avgEur * PESETAS_TO_EUR);
+                    return `~${avgEur.toLocaleString('es-ES')} €/mes (${avgPts.toLocaleString('es-ES')} pts)`;
+                } else if (smi.monthly_pts) {
+                    const avgPts = Math.round(smi.monthly_pts * multiplier);
+                    const avgEur = Math.round(avgPts / PESETAS_TO_EUR);
+                    return `~${avgPts.toLocaleString('es-ES')} pts/mes (${avgEur} €)`;
+                }
             }
             return null;
         }
