@@ -415,7 +415,10 @@
         function getPopulation(year) {
             const found = findByYear(DATA.population || [], year);
             if (!found) return null;
+            // Data uses 'millions' field
+            if (found.millions) return `${found.millions} millones`;
             const pop = found.total || found.population;
+            if (!pop) return null;
             if (pop >= 1000000) return `${(pop / 1000000).toFixed(1)} millones`;
             return pop.toLocaleString('es-ES');
         }
