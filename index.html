@@ -426,9 +426,15 @@
         function getEntertainment(year) {
             const eras = DATA.entertainment || [];
             const found = eras.find(e => year >= e.start && year <= e.end);
-            if (!found || !found.shows || found.shows.length === 0) return null;
-            const show = found.shows[Math.floor(Math.random() * found.shows.length)];
-            return { value: show, label: found.label || 'En la tele' };
+            if (!found) return null;
+            // Data uses 'items' or 'shows', with fallback to 'primary'
+            const items = found.items || found.shows;
+            if (items && items.length > 0) {
+                const show = items[Math.floor(Math.random() * items.length)];
+                return { value: show, label: found.label || 'En la tele' };
+            }
+            if (found.primary) return { value: found.primary, label: found.label || 'En la tele' };
+            return null;
         }
 
         function getBuyingPower(year) {
