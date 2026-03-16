@@ -301,12 +301,12 @@
                     <div class="aligned-row government-music-row">
                         <div class="government-section">
                             <div class="fact" id="factPresident">
-                                <div class="fact-label">Presidente del Gobierno</div>
+                                <div class="fact-label">🏛️ Presidente del Gobierno</div>
                                 <div class="fact-value large" id="president">Felipe González</div>
                             </div>
 
                             <div class="fact" id="factKing">
-                                <div class="fact-label" id="kingLabel">Jefe del Estado</div>
+                                <div class="fact-label" id="kingLabel">👑 Jefe del Estado</div>
                                 <div class="fact-value large" id="king">Juan Carlos I</div>
                             </div>
                         </div>
@@ -321,12 +321,12 @@
                     <!-- Row 2: Population + TV (aligned) -->
                     <div class="aligned-row population-tv-row">
                         <div class="fact" id="factPopulation">
-                            <div class="fact-label">Población</div>
+                            <div class="fact-label">👥 Población</div>
                             <div class="fact-value" id="population">38,4 millones</div>
                         </div>
 
                         <div class="fact" id="factTV">
-                            <div class="fact-label" id="tvLabel">En la tele</div>
+                            <div class="fact-label" id="tvLabel">📺 En la tele</div>
                             <div class="fact-value" id="tv">Un, Dos, Tres</div>
                         </div>
                     </div>
@@ -334,15 +334,15 @@
                     <!-- Prices Row -->
                     <div class="prices-row">
                         <div class="fact" id="factCoffee">
-                            <div class="fact-label">Un café costaba</div>
+                            <div class="fact-label">☕ Un café costaba</div>
                             <div class="fact-value" id="coffee">—</div>
                         </div>
                         <div class="fact" id="factHouse">
-                            <div class="fact-label">Una casa costaba</div>
+                            <div class="fact-label">🏠 Una casa costaba</div>
                             <div class="fact-value" id="house">—</div>
                         </div>
                         <div class="fact" id="factSalary">
-                            <div class="fact-label">Salario medio</div>
+                            <div class="fact-label">💰 Salario medio</div>
                             <div class="fact-value" id="salary">—</div>
                         </div>
                     </div>
@@ -350,15 +350,15 @@
                     <!-- Buying Power Row -->
                     <div class="buying-row">
                         <div class="buying-item" id="factBuying1">
-                            <div class="buying-amount">CON 1€</div>
+                            <div class="buying-amount">🛒 CON 1€</div>
                             <div class="buying-value" id="buying1">—</div>
                         </div>
                         <div class="buying-item" id="factBuying100">
-                            <div class="buying-amount">CON 100€</div>
+                            <div class="buying-amount">🛒 CON 100€</div>
                             <div class="buying-value" id="buying100">—</div>
                         </div>
                         <div class="buying-item" id="factBuying1000">
-                            <div class="buying-amount">CON 1.000€</div>
+                            <div class="buying-amount">🛒 CON 1.000€</div>
                             <div class="buying-value" id="buying1000">—</div>
                         </div>
                     </div>
@@ -366,7 +366,7 @@
 
                 <div class="poster-footer">
                     <div class="older-than" id="factOlderThan">
-                        Eres más viejo que <span id="olderThan">Internet</span>
+                        🎂 Eres más viejo que <span id="olderThan">Internet</span>
                     </div>
                     <div class="tagline">El día que todo empezó</div>
                     <div class="watermark">eldiaqueaciste.es</div>
@@ -549,11 +549,11 @@
 
         function getKing(dateStr) {
             const found = findByDate(DATA.kings || [], dateStr);
-            if (!found) return { name: null, label: 'Jefe del Estado', hidePresident: false };
-            let label = 'Rey de España';
+            if (!found) return { name: null, label: '👑 Jefe del Estado', hidePresident: false };
+            let label = '👑 Rey de España';
             let hidePresident = false;
-            if (found.type === 'dictador') { label = 'Jefe del Estado'; hidePresident = true; }
-            else if (found.type === 'republica') label = 'Presidente de la República';
+            if (found.type === 'dictador') { label = '👑 Jefe del Estado'; hidePresident = true; }
+            else if (found.type === 'republica') label = '🏛️ Presidente de la República';
             else if (found.type === 'guerra') return { name: null, label: null, hidePresident: true };
             return { name: found.name, label, hidePresident };
         }
@@ -647,9 +647,9 @@
             const items = found.items || found.shows;
             if (items && items.length > 0) {
                 const show = items[Math.floor(Math.random() * items.length)];
-                return { value: show, label: found.label || 'En la tele' };
+                return { value: show, label: '📺 ' + (found.label || 'En la tele') };
             }
-            if (found.primary) return { value: found.primary, label: found.label || 'En la tele' };
+            if (found.primary) return { value: found.primary, label: '📺 ' + (found.label || 'En la tele') };
             return null;
         }
 
