@@ -4,7 +4,7 @@
   "comparisons": [
     {
       "start": 1920, "end": 1935,
-      "with_1_eur": "Un periódico + tabaco",
+      "with_1_eur": "10 periódicos",
       "with_100_eur": "Un traje a medida",
       "with_1000_eur": "Una casa de pueblo",
       "iconic_purchase": "Un gramófono"
@@ -19,71 +19,71 @@
     },
     {
       "start": 1940, "end": 1949,
-      "with_1_eur": "1 kg de pan",
-      "with_100_eur": "Un abrigo de lana",
+      "with_1_eur": "20 barras de pan",
+      "with_100_eur": "Una radio de válvulas",
       "with_1000_eur": "Un piso pequeño",
-      "iconic_purchase": "Una radio de válvulas"
+      "iconic_purchase": "Una máquina de coser"
     },
     {
       "start": 1950, "end": 1959,
-      "with_1_eur": "Entrada de cine + palomitas",
-      "with_100_eur": "Una bicicleta",
+      "with_1_eur": "10 entradas de cine",
+      "with_100_eur": "Una bicicleta BH",
       "with_1000_eur": "Una moto Vespa",
       "iconic_purchase": "Una nevera"
     },
     {
       "start": 1960, "end": 1969,
-      "with_1_eur": "Un disco de vinilo",
-      "with_100_eur": "Un tocadiscos",
+      "with_1_eur": "5 discos de vinilo",
+      "with_100_eur": "Un televisor",
       "with_1000_eur": "Un SEAT 600",
-      "iconic_purchase": "Tu primera televisión"
+      "iconic_purchase": "Tu primera tele"
     },
     {
       "start": 1970, "end": 1975,
-      "with_1_eur": "3 litros de gasolina",
-      "with_100_eur": "Una cámara de fotos",
+      "with_1_eur": "10 litros de gasolina",
+      "with_100_eur": "Una lavadora",
       "with_1000_eur": "Un SEAT 127",
-      "iconic_purchase": "Una lavadora automática"
+      "iconic_purchase": "Un tocadiscos"
     },
     {
       "start": 1976, "end": 1982,
-      "with_1_eur": "Una revista + chicles",
-      "with_100_eur": "Unas zapatillas Adidas",
+      "with_1_eur": "5 cafés con churros",
+      "with_100_eur": "Un televisor en color",
       "with_1000_eur": "Un SEAT Panda",
       "iconic_purchase": "Un vídeo VHS"
     },
     {
       "start": 1983, "end": 1989,
-      "with_1_eur": "Una cinta de cassette",
-      "with_100_eur": "Un walkman Sony",
-      "with_1000_eur": "Un ordenador Spectrum",
-      "iconic_purchase": "Una Game & Watch"
+      "with_1_eur": "3 cintas de cassette",
+      "with_100_eur": "Un radiocassette",
+      "with_1000_eur": "Un ordenador Amstrad",
+      "iconic_purchase": "Un Walkman Sony"
     },
     {
       "start": 1990, "end": 1995,
-      "with_1_eur": "Una bolsa de chuches",
-      "with_100_eur": "Un juego de Game Boy",
-      "with_1000_eur": "Un viaje al Caribe",
+      "with_1_eur": "2 bolsas de Doritos",
+      "with_100_eur": "Una Game Boy",
+      "with_1000_eur": "Un PC 486",
       "iconic_purchase": "Un microondas"
     },
     {
       "start": 1996, "end": 2001,
-      "with_1_eur": "Una llamada de cabina",
-      "with_100_eur": "Un mes de Internet",
+      "with_1_eur": "20 min de Internet",
+      "with_100_eur": "Un móvil Nokia básico",
       "with_1000_eur": "Un ordenador Pentium",
-      "iconic_purchase": "Tu primer móvil Nokia"
+      "iconic_purchase": "Tu primer móvil"
     },
     {
       "start": 2002, "end": 2007,
-      "with_1_eur": "Un SMS premium",
+      "with_1_eur": "5 tonos de móvil",
       "with_100_eur": "Un iPod Shuffle",
-      "with_1000_eur": "Una PS2 + TV plana",
+      "with_1000_eur": "Una TV plasma 32\"",
       "iconic_purchase": "Un iPod"
     },
     {
       "start": 2008, "end": 2014,
       "with_1_eur": "Una app de pago",
-      "with_100_eur": "Un disco duro externo",
+      "with_100_eur": "Un disco duro 1TB",
       "with_1000_eur": "Un iPhone 4",
       "iconic_purchase": "Un smartphone"
     },
@@ -91,15 +91,15 @@
       "start": 2015, "end": 2020,
       "with_1_eur": "Un mes de Spotify",
       "with_100_eur": "Unos AirPods",
-      "with_1000_eur": "Vuelo NY ida/vuelta",
-      "iconic_purchase": "Netflix (100 meses)"
+      "with_1000_eur": "Un MacBook Air usado",
+      "iconic_purchase": "Una suscripción Netflix"
     },
     {
       "start": 2021, "end": 2030,
-      "with_1_eur": "Un café (apenas)",
-      "with_100_eur": "Un mes de gimnasio",
-      "with_1000_eur": "Un iPhone reacondicionado",
-      "iconic_purchase": "Gafas de realidad virtual"
+      "with_1_eur": "Medio café",
+      "with_100_eur": "3 meses de gimnasio",
+      "with_1000_eur": "Un iPhone 13 rebajado",
+      "iconic_purchase": "Unas gafas VR"
     }
   ]
 }
