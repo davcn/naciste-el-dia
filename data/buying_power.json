@@ -1,105 +1,133 @@
 {
-  "description": "Fun purchasing power comparisons by era",
+  "description": "Purchasing power comparisons every 5 years. Based on historical salary/price data.",
   "pesetas_to_euro": 166.386,
   "comparisons": [
     {
-      "start": 1920, "end": 1935,
-      "with_1_eur": "10 periódicos",
+      "start": 1920, "end": 1924,
+      "with_1_eur": "20 periódicos",
+      "with_100_eur": "Un gramófono",
+      "with_1000_eur": "Una casa de pueblo"
+    },
+    {
+      "start": 1925, "end": 1929,
+      "with_1_eur": "15 periódicos",
+      "with_100_eur": "Una bicicleta",
+      "with_1000_eur": "Un coche Ford T usado"
+    },
+    {
+      "start": 1930, "end": 1935,
+      "with_1_eur": "10 kg de pan",
       "with_100_eur": "Un traje a medida",
-      "with_1000_eur": "Una casa de pueblo",
-      "iconic_purchase": "Un gramófono"
+      "with_1000_eur": "Un piso pequeño"
     },
     {
       "start": 1936, "end": 1939,
       "with_1_eur": null,
       "with_100_eur": null,
       "with_1000_eur": null,
-      "iconic_purchase": null,
-      "note": "Tiempos de guerra"
+      "note": "Guerra Civil"
     },
     {
-      "start": 1940, "end": 1949,
-      "with_1_eur": "20 barras de pan",
+      "start": 1940, "end": 1944,
+      "with_1_eur": "30 barras de pan",
       "with_100_eur": "Una radio de válvulas",
-      "with_1000_eur": "Un piso pequeño",
-      "iconic_purchase": "Una máquina de coser"
+      "with_1000_eur": "Un piso en ciudad"
     },
     {
-      "start": 1950, "end": 1959,
-      "with_1_eur": "10 entradas de cine",
+      "start": 1945, "end": 1949,
+      "with_1_eur": "20 kg de patatas",
+      "with_100_eur": "Una máquina de coser",
+      "with_1000_eur": "Un piso pequeño"
+    },
+    {
+      "start": 1950, "end": 1954,
+      "with_1_eur": "15 litros de leche",
       "with_100_eur": "Una bicicleta BH",
-      "with_1000_eur": "Una moto Vespa",
-      "iconic_purchase": "Una nevera"
+      "with_1000_eur": "Una moto Vespa"
     },
     {
-      "start": 1960, "end": 1969,
-      "with_1_eur": "5 discos de vinilo",
-      "with_100_eur": "Un televisor",
-      "with_1000_eur": "Un SEAT 600",
-      "iconic_purchase": "Tu primera tele"
+      "start": 1955, "end": 1959,
+      "with_1_eur": "12 entradas de cine",
+      "with_100_eur": "Una nevera pequeña",
+      "with_1000_eur": "Un SEAT 600 usado"
     },
     {
-      "start": 1970, "end": 1975,
-      "with_1_eur": "10 litros de gasolina",
-      "with_100_eur": "Una lavadora",
-      "with_1000_eur": "Un SEAT 127",
-      "iconic_purchase": "Un tocadiscos"
+      "start": 1960, "end": 1964,
+      "with_1_eur": "8 discos de vinilo",
+      "with_100_eur": "Un televisor B/N",
+      "with_1000_eur": "Un SEAT 600"
     },
     {
-      "start": 1976, "end": 1982,
-      "with_1_eur": "5 cafés con churros",
+      "start": 1965, "end": 1969,
+      "with_1_eur": "5 entradas de cine",
+      "with_100_eur": "Un tocadiscos",
+      "with_1000_eur": "Un SEAT 850"
+    },
+    {
+      "start": 1970, "end": 1974,
+      "with_1_eur": "15 litros gasolina",
+      "with_100_eur": "Una cámara de fotos",
+      "with_1000_eur": "Un SEAT 127"
+    },
+    {
+      "start": 1975, "end": 1979,
+      "with_1_eur": "8 cafés con churros",
       "with_100_eur": "Un televisor en color",
-      "with_1000_eur": "Un SEAT Panda",
-      "iconic_purchase": "Un vídeo VHS"
+      "with_1000_eur": "Un SEAT Panda"
     },
     {
-      "start": 1983, "end": 1989,
+      "start": 1980, "end": 1984,
+      "with_1_eur": "5 cafés",
+      "with_100_eur": "Un vídeo VHS",
+      "with_1000_eur": "Un Renault 5"
+    },
+    {
+      "start": 1985, "end": 1989,
       "with_1_eur": "3 cintas de cassette",
-      "with_100_eur": "Un radiocassette",
-      "with_1000_eur": "Un ordenador Amstrad",
-      "iconic_purchase": "Un Walkman Sony"
+      "with_100_eur": "Un Walkman Sony",
+      "with_1000_eur": "Un ordenador Amstrad"
     },
     {
-      "start": 1990, "end": 1995,
-      "with_1_eur": "2 bolsas de Doritos",
+      "start": 1990, "end": 1994,
+      "with_1_eur": "2 revistas",
       "with_100_eur": "Una Game Boy",
-      "with_1000_eur": "Un PC 486",
-      "iconic_purchase": "Un microondas"
+      "with_1000_eur": "Un PC 486"
     },
     {
-      "start": 1996, "end": 2001,
-      "with_1_eur": "20 min de Internet",
-      "with_100_eur": "Un móvil Nokia básico",
-      "with_1000_eur": "Un ordenador Pentium",
-      "iconic_purchase": "Tu primer móvil"
+      "start": 1995, "end": 1999,
+      "with_1_eur": "30 min de cabina",
+      "with_100_eur": "Un móvil Nokia",
+      "with_1000_eur": "Un PC Pentium"
     },
     {
-      "start": 2002, "end": 2007,
-      "with_1_eur": "5 tonos de móvil",
+      "start": 2000, "end": 2004,
+      "with_1_eur": "5 SMS",
+      "with_100_eur": "Un reproductor MP3",
+      "with_1000_eur": "Una TV plasma 32\""
+    },
+    {
+      "start": 2005, "end": 2009,
+      "with_1_eur": "Una canción en iTunes",
       "with_100_eur": "Un iPod Shuffle",
-      "with_1000_eur": "Una TV plasma 32\"",
-      "iconic_purchase": "Un iPod"
+      "with_1000_eur": "Un iPhone 3G"
     },
     {
-      "start": 2008, "end": 2014,
+      "start": 2010, "end": 2014,
       "with_1_eur": "Una app de pago",
       "with_100_eur": "Un disco duro 1TB",
-      "with_1000_eur": "Un iPhone 4",
-      "iconic_purchase": "Un smartphone"
+      "with_1000_eur": "Un iPhone 5"
     },
     {
-      "start": 2015, "end": 2020,
+      "start": 2015, "end": 2019,
       "with_1_eur": "Un mes de Spotify",
-      "with_100_eur": "Unos AirPods",
-      "with_1000_eur": "Un MacBook Air usado",
-      "iconic_purchase": "Una suscripción Netflix"
+      "with_100_eur": "Unos auriculares BT",
+      "with_1000_eur": "Un iPhone XR"
     },
     {
-      "start": 2021, "end": 2030,
+      "start": 2020, "end": 2025,
       "with_1_eur": "Medio café",
       "with_100_eur": "3 meses de gimnasio",
-      "with_1000_eur": "Un iPhone 13 rebajado",
-      "iconic_purchase": "Unas gafas VR"
+      "with_1000_eur": "Un iPhone 14"
     }
   ]
 }
