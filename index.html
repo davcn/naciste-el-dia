@@ -189,6 +189,71 @@
 
         .loading { opacity: 0.5; pointer-events: none; }
 
+        /* Teaser/Locked Mode */
+        .locked {
+            position: relative;
+        }
+        .locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        
+        /* Fact locked (coffee, salary) */
+        .fact.locked .fact-value {
+            filter: blur(6px);
+            user-select: none;
+        }
+        
+        /* Music box locked */
+        .music-box.locked {
+            background: #f8f8f8;
+        }
+        .music-box.locked .music-artist,
+        .music-box.locked .music-song {
+            filter: blur(8px);
+            user-select: none;
+        }
+        .music-box.locked::after {
+            font-size: 1.8rem;
+        }
+        
+        /* Buying row locked */
+        .buying-row.locked .buying-value {
+            filter: blur(6px);
+            user-select: none;
+        }
+        .buying-row.locked::after {
+            content: '🔒 Descúbrelo';
+            font-size: 0.7rem;
+            font-family: 'Montserrat', sans-serif;
+            background: rgba(255,255,255,0.95);
+            padding: 4px 12px;
+            border-radius: 15px;
+            letter-spacing: 1px;
+        }
+        
+        /* Older than locked */
+        .older-than.locked {
+            display: inline-block;
+        }
+        .older-than.locked span {
+            filter: blur(6px);
+            user-select: none;
+        }
+        .older-than.locked::after {
+            position: relative;
+            transform: none;
+            top: auto;
+            left: auto;
+            margin-left: 5px;
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 550px) {
             .poster { width: 100%; height: auto; min-height: 600px; padding: 25px; }
             .day-big { font-size: 4rem; }
@@ -626,6 +691,9 @@
         }
 
         async function generatePoster() {
+            // Reset teaser mode when generating new poster
+            disableTeaserMode();
+            
             await loadData();
             
             const dateInput = document.getElementById('birthdate').value;
@@ -684,9 +752,32 @@
             document.getElementById('olderThan').textContent = getOlderThan(dateInput);
         }
 
+        function enableTeaserMode() {
+            // Lock: Music, Coffee, Salary, Older Than, Buying Power
+            document.getElementById('factSong').classList.add('locked');
+            document.getElementById('factCoffee').classList.add('locked');
+            document.getElementById('factSalary').classList.add('locked');
+            document.getElementById('factOlderThan').classList.add('locked');
+            document.querySelector('.buying-row').classList.add('locked');
+        }
+
+        function disableTeaserMode() {
+            document.getElementById('factSong').classList.remove('locked');
+            document.getElementById('factCoffee').classList.remove('locked');
+            document.getElementById('factSalary').classList.remove('locked');
+            document.getElementById('factOlderThan').classList.remove('locked');
+            document.querySelector('.buying-row').classList.remove('locked');
+        }
+
         async function shareStory() {
             const poster = document.getElementById('poster');
             poster.classList.add('loading');
+            
+            // Enable teaser mode for the story image
+            enableTeaserMode();
+            
+            // Small delay to let CSS apply
+            await new Promise(r => setTimeout(r, 100));
             
             try {
                 // Generate story-sized image (1080x1920 = 9:16)
@@ -724,13 +815,15 @@
                 link.href = storyCanvas.toDataURL('image/jpeg', 0.95);
                 link.click();
                 
-                alert('📱 Imagen descargada! Súbela a tu Instagram Story');
+                alert('📱 Imagen descargada! Súbela a tu Instagram Story\n\n🔒 Modo teaser activado - los datos bloqueados generan curiosidad!');
             } catch (error) {
                 console.error('Story generation failed:', error);
                 alert('Error al generar la imagen');
+                disableTeaserMode(); // Restore on error
             }
             
             poster.classList.remove('loading');
+            // Keep teaser mode active after sharing
         }
 
         // Stripe configuration
