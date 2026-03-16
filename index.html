@@ -94,15 +94,30 @@
             letter-spacing: 3px; text-align: center; margin-bottom: 10px;
         }
 
-        /* Two Column Layout */
-        .two-columns {
+        /* Aligned Rows Layout */
+        .aligned-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px 40px;
-            flex: 1;
+            gap: 20px 40px;
+            align-items: stretch;
+            margin-bottom: 20px;
         }
 
-        .column { display: flex; flex-direction: column; gap: 22px; }
+        .government-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* When only Jefe del Estado (Franco era) */
+        .government-section.solo {
+            justify-content: center;
+        }
+
+        .population-tv-row {
+            align-items: center;
+        }
 
         .fact { text-align: center; }
         .fact.hidden { display: none !important; }
@@ -177,7 +192,7 @@
         @media (max-width: 550px) {
             .poster { width: 100%; height: auto; min-height: 600px; padding: 25px; }
             .day-big { font-size: 4rem; }
-            .two-columns { grid-template-columns: 1fr; gap: 15px; }
+            .aligned-row { grid-template-columns: 1fr; gap: 15px; }
             .buying-row { grid-template-columns: 1fr; }
         }
     </style>
@@ -217,9 +232,9 @@
                 <div id="factsContainer">
                     <div class="section-title">España en este día</div>
 
-                    <div class="two-columns">
-                        <!-- Left Column -->
-                        <div class="column">
+                    <!-- Row 1: Government + Music (aligned) -->
+                    <div class="aligned-row government-music-row">
+                        <div class="government-section">
                             <div class="fact" id="factPresident">
                                 <div class="fact-label">Presidente del Gobierno</div>
                                 <div class="fact-value large" id="president">Felipe González</div>
@@ -229,25 +244,25 @@
                                 <div class="fact-label" id="kingLabel">Jefe del Estado</div>
                                 <div class="fact-value large" id="king">Juan Carlos I</div>
                             </div>
-
-                            <div class="fact" id="factPopulation">
-                                <div class="fact-label">Población</div>
-                                <div class="fact-value" id="population">38,4 millones</div>
-                            </div>
                         </div>
 
-                        <!-- Right Column -->
-                        <div class="column">
-                            <div class="music-box" id="factSong">
-                                <div class="music-label" id="songLabel">🎵 Hit del momento</div>
-                                <div class="music-artist" id="songArtist">Mecano</div>
-                                <div class="music-song" id="song">"Ay Qué Pesado"</div>
-                            </div>
+                        <div class="music-box" id="factSong">
+                            <div class="music-label" id="songLabel">🎵 Sonaba en todas partes</div>
+                            <div class="music-artist" id="songArtist">Mecano</div>
+                            <div class="music-song" id="song">"Ay Qué Pesado"</div>
+                        </div>
+                    </div>
 
-                            <div class="fact" id="factTV">
-                                <div class="fact-label" id="tvLabel">En la tele</div>
-                                <div class="fact-value" id="tv">Un, Dos, Tres</div>
-                            </div>
+                    <!-- Row 2: Population + TV (aligned) -->
+                    <div class="aligned-row population-tv-row">
+                        <div class="fact" id="factPopulation">
+                            <div class="fact-label">Población</div>
+                            <div class="fact-value" id="population">38,4 millones</div>
+                        </div>
+
+                        <div class="fact" id="factTV">
+                            <div class="fact-label" id="tvLabel">En la tele</div>
+                            <div class="fact-value" id="tv">Un, Dos, Tres</div>
                         </div>
                     </div>
 
@@ -540,11 +555,11 @@
             const los40 = DATA.los40 || [];
             let found = los40.find(s => s.year === year && s.month === month);
             if (!found) found = los40.filter(s => s.year === year)[0];
-            if (found) return { artist: found.artist, song: `"${found.song}"`, label: '🎵 Hit del momento' };
+            if (found) return { artist: found.artist, song: `"${found.song}"`, label: '🎵 Sonaba en todas partes' };
             
             const historic = DATA.music_historic || [];
             const histFound = historic.find(s => year >= s.start && year <= s.end);
-            if (histFound) return { artist: histFound.artist, song: `"${histFound.song}"`, label: '🎵 Hit del momento' };
+            if (histFound) return { artist: histFound.artist, song: `"${histFound.song}"`, label: '🎵 Sonaba en todas partes' };
             return null;
         }
 
@@ -629,10 +644,13 @@
             if (isWar) return;
 
             const kingData = getKing(dateInput);
+            const govSection = document.querySelector('.government-section');
             if (kingData.hidePresident) {
                 setFact('president', null);
+                govSection.classList.add('solo');
             } else {
                 setFact('president', getPresident(dateInput));
+                govSection.classList.remove('solo');
             }
             setFact('king', kingData.name, 'kingLabel', kingData.label);
 
